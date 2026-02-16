@@ -1,7 +1,7 @@
 # Clarified Requirements
 
 - task_id: bastion-takeover-2026-02-14
-- objective: Take over Bastion delivery using only MVP orchestrator process and role prompts from `dane-agent-orchestra`.
+- objective: Take over Bastion delivery using only MVP orchestrator process and role prompts from `danes-agent-orchestra`.
 - constraints:
   - Do not use Bastion native multi-agent orchestrator automation as control plane.
   - Keep Bastion GitHub roadmap discipline intact.

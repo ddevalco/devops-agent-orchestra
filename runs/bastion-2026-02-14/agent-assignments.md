@@ -1,7 +1,7 @@
 # Bastion MVP Orchestrator Assignments
 
 - task_id: bastion-takeover-2026-02-14
-- orchestrator: `dane-agent-orchestra/prompts/orchestrator.md`
+- orchestrator: `danes-agent-orchestra/prompts/orchestrator.md`
 
 ## Active assignments
 

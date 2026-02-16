@@ -7,8 +7,8 @@ Usage:
   scripts/bootstrap-repo.sh <github-remote-url> [default-branch]
 
 Examples:
-  scripts/bootstrap-repo.sh git@github.com:YOUR_ORG/dane-agent-orchestra.git
-  scripts/bootstrap-repo.sh https://github.com/YOUR_ORG/dane-agent-orchestra.git main
+  scripts/bootstrap-repo.sh git@github.com:YOUR_ORG/danes-agent-orchestra.git
+  scripts/bootstrap-repo.sh https://github.com/YOUR_ORG/danes-agent-orchestra.git main
 USAGE
   exit 1
 fi

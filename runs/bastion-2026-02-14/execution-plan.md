@@ -60,7 +60,7 @@
       - packet_id: P-REVIEW-001
         goal: Validate packet outputs, identify residual blockers, and approve/reject.
         touched_files:
-          - /Users/danedevalcourt/iPhoneApp/dane-agent-orchestra/runs/bastion-2026-02-14/*
+          - /Users/danedevalcourt/iPhoneApp/danes-agent-orchestra/runs/bastion-2026-02-14/*
         depends_on:
           - P-FEATURE-706
           - P-PLANNER-REFILL

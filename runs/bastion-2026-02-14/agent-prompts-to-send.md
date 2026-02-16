@@ -1,6 +1,6 @@
 # Agent Prompts To Send (Current Cycle)
 
-Use these with the matching role prompts in `/Users/danedevalcourt/iPhoneApp/dane-agent-orchestra/prompts/`.
+Use these with the matching role prompts in `/Users/danedevalcourt/iPhoneApp/danes-agent-orchestra/prompts/`.
 
 ## Planner agent prompt
 Task: Execute issue #709 first, then #708.

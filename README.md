@@ -1,9 +1,9 @@
-# Dane Agent Orchestra
+# Danes Agent Orchestra
 
-[![Repo](https://img.shields.io/badge/GitHub-ddevalco%2Fdane--agent--orchestra-181717?logo=github)](https://github.com/ddevalco/dane-agent-orchestra)
-[![Last Commit](https://img.shields.io/github/last-commit/ddevalco/dane-agent-orchestra)](https://github.com/ddevalco/dane-agent-orchestra/commits/main)
-[![Open Issues](https://img.shields.io/github/issues/ddevalco/dane-agent-orchestra)](https://github.com/ddevalco/dane-agent-orchestra/issues)
-[![Stars](https://img.shields.io/github/stars/ddevalco/dane-agent-orchestra?style=social)](https://github.com/ddevalco/dane-agent-orchestra/stargazers)
+[![Repo](https://img.shields.io/badge/GitHub-ddevalco%2Fdanes--agent--orchestra-181717?logo=github)](https://github.com/ddevalco/danes-agent-orchestra)
+[![Last Commit](https://img.shields.io/github/last-commit/ddevalco/danes-agent-orchestra)](https://github.com/ddevalco/danes-agent-orchestra/commits/main)
+[![Open Issues](https://img.shields.io/github/issues/ddevalco/danes-agent-orchestra)](https://github.com/ddevalco/danes-agent-orchestra/issues)
+[![Stars](https://img.shields.io/github/stars/ddevalco/danes-agent-orchestra?style=social)](https://github.com/ddevalco/danes-agent-orchestra/stargazers)
 
 Multi-agent development system for VS Code with a global-first setup, orchestration flows, and one-command bootstrap scripts.
 

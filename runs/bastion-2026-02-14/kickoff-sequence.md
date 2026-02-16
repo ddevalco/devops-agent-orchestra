@@ -1,9 +1,9 @@
 # Kickoff Sequence (MVP Orchestrator Only)
 
 ## Control plane
-- Orchestrator prompt: `/Users/danedevalcourt/iPhoneApp/dane-agent-orchestra/prompts/orchestrator.md`
-- Workflow: `/Users/danedevalcourt/iPhoneApp/dane-agent-orchestra/docs/WORKFLOW.md`
-- Policy: `/Users/danedevalcourt/iPhoneApp/dane-agent-orchestra/docs/POLICY.md`
+- Orchestrator prompt: `/Users/danedevalcourt/iPhoneApp/danes-agent-orchestra/prompts/orchestrator.md`
+- Workflow: `/Users/danedevalcourt/iPhoneApp/danes-agent-orchestra/docs/WORKFLOW.md`
+- Policy: `/Users/danedevalcourt/iPhoneApp/danes-agent-orchestra/docs/POLICY.md`
 
 ## Step 1 — Orchestrator thread bootstrap
 Use this task envelope in Copilot Chat with the orchestrator prompt loaded:
@@ -21,17 +21,17 @@ Use this task envelope in Copilot Chat with the orchestrator prompt loaded:
 
 ## Step 2 — Dispatch packets
 - Packet for Feature Executor:
-  - `/Users/danedevalcourt/iPhoneApp/dane-agent-orchestra/runs/bastion-2026-02-14/packet-feature-706.md`
+  - `/Users/danedevalcourt/iPhoneApp/danes-agent-orchestra/runs/bastion-2026-02-14/packet-feature-706.md`
 - Packet for Planner:
-  - `/Users/danedevalcourt/iPhoneApp/dane-agent-orchestra/runs/bastion-2026-02-14/packet-planner-refill.md`
+  - `/Users/danedevalcourt/iPhoneApp/danes-agent-orchestra/runs/bastion-2026-02-14/packet-planner-refill.md`
 - Packet for Quality Executor:
-  - `/Users/danedevalcourt/iPhoneApp/dane-agent-orchestra/runs/bastion-2026-02-14/packet-quality-baseline.md`
+  - `/Users/danedevalcourt/iPhoneApp/danes-agent-orchestra/runs/bastion-2026-02-14/packet-quality-baseline.md`
 
 ## Step 3 — Reviewer gate
 After packet outputs, run reviewer using:
-- `/Users/danedevalcourt/iPhoneApp/dane-agent-orchestra/prompts/reviewer.md`
+- `/Users/danedevalcourt/iPhoneApp/danes-agent-orchestra/prompts/reviewer.md`
 
 ## Step 4 — Record and report
 Update:
-- `/Users/danedevalcourt/iPhoneApp/dane-agent-orchestra/runs/bastion-2026-02-14/session-log.md`
-- `/Users/danedevalcourt/iPhoneApp/dane-agent-orchestra/templates/final-report.md`
+- `/Users/danedevalcourt/iPhoneApp/danes-agent-orchestra/runs/bastion-2026-02-14/session-log.md`
+- `/Users/danedevalcourt/iPhoneApp/danes-agent-orchestra/templates/final-report.md`

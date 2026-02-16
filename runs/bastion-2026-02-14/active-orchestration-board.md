@@ -1,7 +1,7 @@
 # Active Orchestration Board
 
 - task_id: bastion-takeover-2026-02-14
-- orchestrator_prompt: /Users/danedevalcourt/iPhoneApp/dane-agent-orchestra/prompts/orchestrator.md
+- orchestrator_prompt: /Users/danedevalcourt/iPhoneApp/danes-agent-orchestra/prompts/orchestrator.md
 - updated_at: 2026-02-14 16:57:54 CST
 
 ## Agent assignments (active)
