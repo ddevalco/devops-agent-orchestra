@@ -1,0 +1,21 @@
+# Clarified Requirements
+
+- task_id: bastion-takeover-2026-02-14
+- objective: Take over Bastion delivery using only MVP orchestrator process and role prompts from `dane-agent-orchestra`.
+- constraints:
+  - Do not use Bastion native multi-agent orchestrator automation as control plane.
+  - Keep Bastion GitHub roadmap discipline intact.
+  - Start active execution immediately with available queue.
+- acceptance_criteria:
+  - Bastion canonical guidance points to MVP orchestrator process.
+  - A concrete role assignment plan exists with active packets.
+  - At least one execution-ready packet is assigned now.
+  - Planner refill packet exists to restore ready-now queue health.
+- assumptions:
+  - Existing Bastion lane labels and issue taxonomy remain valid inputs.
+  - Current top open ready-now feature issue is #706.
+- out_of_scope:
+  - Redesigning Bastion architecture.
+  - Bulk relabeling all historical GitHub issues in this pass.
+- decision: clarified
+- next_action: handoff_to_planner

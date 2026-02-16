@@ -1,0 +1,22 @@
+# Execution Packet
+
+- task_id: bastion-takeover-2026-02-14
+- packet_id: P-PLANNER-REFILL
+- owner: planner
+- goal: Refill Bastion `ready-now` queue to restore lane/global SLO and unblock sustained execution.
+- allowed_scope:
+  - GitHub issue/project metadata for `ddevalco/bastion`
+  - /Users/danedevalcourt/iPhoneApp/bastion/docs/agents/HANDOFF-planner.md
+  - /Users/danedevalcourt/iPhoneApp/bastion/docs/HANDOFF.md (queue snapshot only)
+- touched_files:
+  - planning notes/handoff docs only
+- validation:
+  - `ready-now` global >= 6
+  - `agent:feature` ready-now >= 2
+  - `agent:docs` ready-now >= 2
+  - `agent:planner` ready-now >= 2
+- constraints:
+  - Do not move `ask-me-first` items without explicit operator decision
+  - Keep one lane label and one readiness label per executable issue
+- fallback_if_blocked:
+  - produce operator decision packet with exact issue numbers and required decision
