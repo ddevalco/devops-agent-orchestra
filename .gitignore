@@ -1,1 +1,5 @@
 .DS_Store
+
+# Local run artifacts (often project-specific and sensitive context)
+runs/*
+!runs/.gitkeep
