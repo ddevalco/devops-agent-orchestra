@@ -1,0 +1,230 @@
+# Backlog
+
+This document tracks improvement priorities for the danes-agent-orchestra project. It serves as a mirror of GitHub Issues/Projects and a primary planning source.
+
+**Last Updated:** 2026-02-17
+
+## Status Overview
+
+- **Completed:** Phases 1-3
+- **In Progress:** Phase 4 validation pending
+- **Remaining:** P8-P10 from original improvement backlog
+
+## GitHub Integration
+
+**Repository:** [ddevalco/danes-agent-orchestra](https://github.com/ddevalco/danes-agent-orchestra)  
+**Issues:** [GitHub Issues](https://github.com/ddevalco/danes-agent-orchestra/issues)  
+**Projects:** [GitHub Projects](https://github.com/ddevalco/danes-agent-orchestra/projects)
+
+This file maintains synchronization with GitHub state. When GitHub is the source of truth, this file reflects it. When working offline or in rapid iteration, this file may lead temporarily.
+
+---
+
+## Phase 4: Validation & Hardening (In Progress)
+
+### P4.1: End-to-End Integration Testing
+
+- **Status:** Pending
+- **Priority:** High
+- **Description:** Execute full orchestrated cycle from Clarifier → Planner → parallel execution → Reviewer → final report
+- **Acceptance Criteria:**
+  - All agents load and appear in VS Code agent picker
+  - Orchestrator successfully delegates to specialists
+  - File overlap detection prevents race conditions
+  - Review gate properly validates and rejects/approves work
+  - Final report includes all required fields
+- **Linked Issues:** TBD
+
+### P4.2: Workspace Install Script Validation
+
+- **Status:** Pending
+- **Priority:** High
+- **Description:** Verify `install-workspace-agents.sh` works across different workspace configurations
+- **Acceptance Criteria:**
+  - Script successfully installs to .github/agents
+  - Agents appear after Developer: Reload Window
+  - Multi-repo workspace handling works correctly
+- **Linked Issues:** TBD
+
+### P4.3: Global Install Script Validation
+
+- **Status:** Pending
+- **Priority:** High
+- **Description:** Confirm `install-global-agents.sh` properly installs to VS Code User Data
+- **Acceptance Criteria:**
+  - Agents available across all workspace contexts
+  - Profile-scoped behavior verified
+  - Conflict resolution with workspace agents tested
+- **Linked Issues:** TBD
+
+---
+
+## Phase 5: Enhanced Observability (Planned)
+
+### P5.1: Structured Logging
+
+- **Status:** Not Started
+- **Priority:** Medium
+- **Description:** Add structured JSON logging for orchestration events
+- **Rationale:** Better debugging and audit trails for complex multi-agent flows
+- **Effort:** Medium
+- **Linked Issues:** TBD
+
+### P5.2: Execution Timeline Visualization
+
+- **Status:** Not Started
+- **Priority:** Low
+- **Description:** Generate visual timeline of agent handoffs and parallel execution
+- **Rationale:** Helps identify bottlenecks and optimize packet scheduling
+- **Effort:** High
+- **Dependencies:** P5.1 (structured logging)
+- **Linked Issues:** TBD
+
+### P5.3: Performance Metrics Dashboard
+
+- **Status:** Not Started
+- **Priority:** Low
+- **Description:** Track agent performance (time per packet, success rate, escalation frequency)
+- **Rationale:** Data-driven optimization of agent assignments
+- **Effort:** High
+- **Dependencies:** P5.1, P5.2
+- **Linked Issues:** TBD
+
+---
+
+## Phase 6: Advanced Orchestration (Planned)
+
+### P6.1: Dynamic Agent Routing
+
+- **Status:** Not Started
+- **Priority:** Medium
+- **Description:** Implement intelligent agent selection based on historical performance and specialization
+- **Rationale:** Optimize task-agent matching beyond static role definitions
+- **Effort:** High
+- **Linked Issues:** TBD
+
+### P6.2: Async Execution Model
+
+- **Status:** Not Started
+- **Priority:** Low
+- **Description:** Support true async packet execution instead of blocking runSubagent workaround
+- **Rationale:** Improve throughput for large parallel workloads
+- **Effort:** Very High
+- **Blockers:** VS Code API limitations on async agent invocation
+- **Linked Issues:** TBD
+
+### P6.3: Cross-Workspace Orchestration
+
+- **Status:** Not Started
+- **Priority:** Low
+- **Description:** Enable orchestration across multiple repository workspaces
+- **Rationale:** Support monorepo and multi-service architecture patterns
+- **Effort:** High
+- **Linked Issues:** TBD
+
+---
+
+## Technical Debt & Maintenance
+
+### P8: Documentation Completeness
+
+- **Status:** In Progress (This PR)
+- **Priority:** High
+- **Tasks:**
+  - [x] Create CHANGELOG.md
+  - [x] Create BACKLOG.md
+  - [x] Create docs/ARCHITECTURE.md
+  - [ ] Add API documentation for custom agent development
+  - [ ] Create troubleshooting runbook for common errors
+  - [ ] Document memory tool usage patterns
+- **Linked Issues:** GAP-001, GAP-002, GAP-003
+
+### P9: Tool Standardization Audit
+
+- **Status:** Completed (Phase 3)
+- **Priority:** Medium
+- **Description:** Ensure all agent prompts use consistent tool aliases and capabilities
+- **Outcome:** Standardized read_file, runSubagent, memory tool patterns across all agents
+
+### P10: Error Recovery Patterns
+
+- **Status:** Not Started
+- **Priority:** Medium
+- **Description:** Define and document standard error recovery flows
+- **Tasks:**
+  - Document Planner retry with concrete fixes
+  - Define Executor escalation criteria
+  - Establish Reviewer rejection protocols
+- **Effort:** Medium
+- **Linked Issues:** TBD
+
+---
+
+## Future Improvements
+
+### Community & Ecosystem
+
+- **Agent Marketplace:** Share/discover custom specialist agents
+- **Template Library:** Expand template collection for common orchestration patterns
+- **VS Code Extension:** Package as official extension for easier distribution
+- **Integration Examples:** Sample projects demonstrating orchestration with popular frameworks
+
+### Enterprise Features
+
+- **Audit Logging:** Comprehensive audit trail for compliance
+- **Access Control:** Role-based agent availability and permissions
+- **Cost Tracking:** Token usage monitoring per agent/phase
+- **Quality Metrics:** Automated code quality scoring of agent outputs
+
+### AI/ML Enhancements
+
+- **Learning from History:** Improve planning based on past execution outcomes
+- **Predictive Scheduling:** Anticipate file conflicts before execution
+- **Auto-Tuning:** Optimize agent parameters based on observed performance
+- **Context Compression:** Intelligent summarization of large codebases for agents
+
+---
+
+## Completed (Archive)
+
+### Phase 1: Foundation (Completed 2026-02-03)
+
+- ✅ Folder structure migration from upstream
+- ✅ Initial audit of agent prompts
+- ✅ Bulk installation scripts created
+- ✅ README with architecture overview
+
+### Phase 2: Documentation (Completed 2026-02-10)
+
+- ✅ WORKFLOW.md with orchestration lifecycle
+- ✅ SETUP.md with install instructions
+- ✅ AVAILABILITY.md for global vs project behavior
+- ✅ POLICY.md defining MVP scope
+- ✅ Template files for execution artifacts
+
+### Phase 3: Orchestration Refinement (Completed 2026-02-17)
+
+- ✅ Agent delegation guardrails implemented
+- ✅ Tool standardization across roles
+- ✅ File-overlap detection and sequential execution enforcement
+- ✅ Status reporting contract with checkpoints
+- ✅ Review gate validation requirements
+
+---
+
+## Contributing
+
+To propose new backlog items:
+
+1. Open an issue in GitHub with label `enhancement` or `backlog-item`
+2. Include: problem statement, proposed solution, effort estimate, priority justification
+3. Reference related issues/PRs
+4. Update this file in the PR that implements the item
+
+## Backlog Maintenance Protocol
+
+- Review backlog weekly during active development
+- Archive completed items to bottom section
+- Re-prioritize based on user feedback and blockers
+- Keep GitHub Issues synchronized with this file
+- Update status dates when items transition states
