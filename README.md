@@ -58,23 +58,48 @@ graph TB
 
 ```mermaid
 sequenceDiagram
-        actor U as User
-        participant C as Clarifier
-        participant O as Orchestrator
-        participant P as Planner
-        participant S as Specialists
-        participant R as Reviewer
+    actor U as User
+    participant O as Orchestrator
+    participant C as Clarifier
+    participant P as Planner
+    participant S as Specialists
+    participant R as Reviewer
+    participant J as Junior Dev
 
-        U->>O: Objective + constraints
-        O->>C: Clarify only if ambiguous
-        C-->>O: Clear/clarified assumptions
-        O->>P: Build phased plan
-        P-->>O: Packets + touched files + deps
-        O->>S: Execute packets (parallel if disjoint)
-        S-->>O: Results
-        O->>R: Review gate
-        R-->>O: Approve/reject + required fixes
-        O-->>U: Final report
+    U->>O: Objective + constraints
+    
+    alt Ambiguous requirements
+        O->>C: Resolve ambiguity
+        C-->>O: Clarified assumptions
+    end
+    
+    O->>P: Create execution plan
+    P-->>O: Packets (phases, dependencies, files)
+    
+    Note over O,S: Orchestrator coordinates, never implements
+    
+    loop For each phase
+        O->>S: Delegate packet(s) to specialists
+        Note over S: Parallel if files disjoint,<br/>Sequential if overlap
+        S-->>O: Completed work
+    end
+    
+    O->>R: Submit all work to review gate
+    
+    alt Review rejected
+        R-->>O: Required fixes
+        O->>S: Route fixes to specialists
+        S-->>O: Fixed work
+        O->>R: Re-submit for review
+    end
+    
+    R-->>O: APPROVED
+    
+    Note over O,J: Work Completion Protocol (automatic)
+    O->>J: Update CHANGELOG/BACKLOG
+    J-->>O: Docs updated
+    
+    O-->>U: Final report + validation
 ```
 
 ## Key Features
