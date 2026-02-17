@@ -16,7 +16,7 @@ This project is inspired by [simkeyur/vscode-agents](https://github.com/simkeyur
 
 ## What You Get
 
-- Full roster: Clarifier, Orchestrator, Planner, Junior/Frontend/Backend/Fullstack, Senior Frontend/Backend/Fullstack, Data Engineer, Designer, Prompt Writer, DevOps, Reviewer, plus fallback Executor.
+- Full roster: Clarifier, Orchestrator, Planner, Junior/Mobile/Frontend/Backend/Fullstack, Senior Frontend/Backend/Fullstack, Data Engineer, Designer, Prompt Writer, DevOps, Reviewer, plus fallback Executor.
 - Orchestrator-first workflow: you mostly select `Orchestrator`, provide objective + constraints, and let delegation happen.
 - File-overlap aware parallelization and reviewer gate before final reporting.
 - Ready-to-install prompt files in `prompts/`.

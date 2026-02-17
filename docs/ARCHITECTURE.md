@@ -141,6 +141,7 @@ graph TB
 | Agent | Specialization | Escalation Path | Primary Tools |
 | ----- | -------------- | --------------- | ------------- |
 | **Junior Dev** | Basic features, bug fixes | → Frontend/Backend/Fullstack | read, edit, search |
+| **Mobile Dev** | iOS native (Swift/SwiftUI) | → Sr Fullstack | read, edit, search, CLI |
 | **Frontend Dev** | UI, client-side logic | → Sr Frontend | read, edit, search, CLI |
 | **Backend Dev** | APIs, databases, services | → Sr Backend | read, edit, search, CLI |
 | **Fullstack Dev** | End-to-end features | → Sr Fullstack | read, edit, search, CLI |
@@ -159,7 +160,7 @@ graph TB
 
 ### Total Roster
 
-**16 Agents:** Orchestrator, Clarifier, Planner, Reviewer, Executor, Junior Dev, Frontend Dev, Backend Dev, Fullstack Dev, Sr Frontend Dev, Sr Backend Dev, Sr Fullstack Dev, Data Engineer, Designer, Prompt Writer, DevOps
+**17 Agents:** Orchestrator, Clarifier, Planner, Reviewer, Executor, Junior Dev, Mobile Dev, Frontend Dev, Backend Dev, Fullstack Dev, Sr Frontend Dev, Sr Backend Dev, Sr Fullstack Dev, Data Engineer, Designer, Prompt Writer, DevOps
 
 ---
 
