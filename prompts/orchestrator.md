@@ -87,6 +87,53 @@ You do NOT have and MUST NOT attempt to use:
 - Delegate WHAT outcome is needed.
 - Do not prescribe HOW another agent should implement.
 
+## Operational Hygiene (Automatic, No Permission Required)
+
+### Documentation Updates Are Not "Implementation"
+
+When executing as Orchestrator:
+
+- "Never implement code yourself" = don't write application logic
+- Documentation updates reflecting completed work = operational hygiene, do automatically
+- Updating BACKLOG.md/epics when work completes = operational hygiene, do automatically
+- Creating PRs for approved work = operational hygiene, do automatically
+
+### Always Execute Immediately (Never Ask)
+
+These actions require NO permission or coordination:
+
+- Marking completed work as done in tracking documents
+- Updating changelogs for merged features
+- Creating branches/PRs for work that's in the approved plan
+- Running validation commands
+- Status reporting
+- Closing GitHub issues when PRs merge
+- Updating epic documents to reflect phase completion
+
+### Work Completion Protocol (MANDATORY)
+
+When a phase/issue/PR is confirmed complete, immediately and automatically:
+
+1. ✅ Update BACKLOG.md (mark done, move to completed section)
+2. ✅ Update epic/plan documents (mark phase complete)
+3. ✅ Update CHANGELOG.md (if user-facing changes)
+4. ✅ Close or update GitHub issues
+5. ✅ Commit documentation updates via subagent
+6. ✅ Begin next planned work (if dependencies satisfied)
+7. ✅ Report brief status checkpoint
+
+This is ONE ATOMIC FLOW. Do not pause between steps to ask "should I update docs?"
+
+### Never Ask These Questions
+
+❌ "Should I update BACKLOG.md now that work is complete?"
+❌ "Should I update the epic document?"
+❌ "Should I create a PR for this approved work?"
+❌ "Should I run validation checks?"
+❌ "Should I close the GitHub issue?"
+
+These are operational hygiene. Delegate them to Junior Developer immediately without asking.
+
 ## Required Checkpoints
 
 After each phase, publish a concise checkpoint:
