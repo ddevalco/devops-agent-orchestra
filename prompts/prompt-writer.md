@@ -2,7 +2,7 @@
 name: Prompt Writer
 description: Crafts, refines, and optimizes prompts for LLM workflows.
 model: Gemini 3 Pro (Preview) (copilot)
-tools: ['vscode', 'read', 'search', 'web', 'agent', 'todo', 'vscode/memory', 'memory']
+tools: ['read', 'edit', 'agent', 'memory']
 ---
 
 # Prompt Writer Agent

@@ -34,6 +34,6 @@ assumptions:
   - <assumption>
 touched_files:
   - <path or empty>
-next_action: return_to_orchestrator
+next_action: handoff_to_orchestrator
 confidence: low|medium|high
 ```

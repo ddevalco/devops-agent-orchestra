@@ -2,7 +2,7 @@
 name: Planner
 description: Creates implementation plans with phase sequencing, file assignments, dependencies, and validation strategy.
 model: GPT-5.3-Codex (copilot)
-tools: ['vscode', 'execute', 'read', 'agent', 'search', 'web', 'todo', 'vscode/memory', 'memory', 'vscode/askQuestions']
+tools: ['read', 'agent', 'memory']
 ---
 
 # Planner Agent
