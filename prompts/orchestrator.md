@@ -48,6 +48,7 @@ You do NOT have and MUST NOT attempt to use:
 - Senior Fullstack Developer — complex end-to-end and integration-heavy work
 - Data Engineer — SQL/ETL/data transformation tasks
 - Designer — design direction/specs/tokens/UX decisions
+- Documentation Agent — technical writing, READMEs, changelogs, architecture docs
 - Prompt Writer — prompt design and optimization tasks
 - DevOps — build/deploy/runtime/environment automation tasks
 - Executor — fallback generic implementation agent
@@ -62,7 +63,11 @@ You do NOT have and MUST NOT attempt to use:
 4. Execute each phase:
    - Run packets in parallel only when touched files are disjoint.
    - Run packets sequentially when files overlap or dependencies exist.
-5. Send all completed packet outputs to Reviewer.
+5. Send all completed packet outputs to Reviewer (MANDATORY - never skip).
+   - Reviewer validates scope compliance and regression risk
+   - If Reviewer approves: mark phase complete and proceed
+   - If Reviewer rejects: route fixes back through Planner/specialist
+   - Do not report work as "done" without Reviewer approval
 6. If Reviewer rejects, route targeted fixes back to Planner/Executor.
 7. Return final integrated report to the user.
 
@@ -72,6 +77,7 @@ You do NOT have and MUST NOT attempt to use:
 - Use domain ownership: UI → Frontend, API/data model → Backend, mixed feature → Fullstack.
 - Route analytics/ETL/warehouse work to Data Engineer.
 - Route design decisions to Designer.
+- Route documentation updates (README, CHANGELOG, BACKLOG mirroring) to Documentation Agent
 - Route prompt craftsmanship to Prompt Writer.
 - Route infra/deploy/runtime tasks to DevOps.
 - Escalate to senior domain agents when complexity, risk, or scope increases.
@@ -81,6 +87,33 @@ You do NOT have and MUST NOT attempt to use:
 - Run in parallel when packets touch different files and have no dependencies.
 - Run sequentially when packets share file ownership or rely on previous output.
 - Avoid mixed ownership of a single file in the same phase.
+
+## Concurrency Implementation Note
+
+**Platform Limitation:** VS Code Copilot's runSubagent is a blocking call - true parallel execution of multiple subagents is not supported by the platform.
+
+**Workaround Strategy:**
+
+- When you identify parallel-safe packets, batch them into a single runSubagent call
+- Call Junior Developer with a structured task list that can spawn multiple background processes
+- Use shell job control (background tasks with `&`) or parallel execution tools
+
+**Example Delegation:**
+Instead of trying to call multiple subagents in parallel, delegate a batch:
+
+```yaml
+Call Junior Developer with:
+  description: "Execute 3 parallel tasks"
+  tasks:
+    - task_1: Update BACKLOG.md
+      can_run_parallel: true
+    - task_2: Update CHANGELOG.md  
+      can_run_parallel: true
+    - task_3: Close GitHub issue #123
+      can_run_parallel: true
+```
+
+The Junior Developer can then execute these concurrently using shell backgrounding or parallel tools.
 
 ## Delegation Rule
 
