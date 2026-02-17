@@ -2,7 +2,7 @@
 name: Executor
 description: Implements one scoped packet with minimal, validated changes and no out-of-scope edits.
 model: GPT-5.3-Codex (copilot)
-tools: ['vscode', 'execute', 'read', 'edit', 'search', 'agent', 'web', 'todo', 'vscode/memory', 'memory']
+tools: ['read', 'execute', 'read', 'edit', 'search', 'agent', 'web', 'todo', 'memory', 'memory']
 ---
 
 # Executor Agent

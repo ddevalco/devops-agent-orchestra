@@ -2,7 +2,7 @@
 name: DevOps
 description: Handles operational automation, CI/CD, runtime/deploy configuration, and environment reliability.
 model: GPT-5.2-Codex (copilot)
-tools: ['vscode', 'execute', 'read', 'edit', 'search', 'web', 'agent', 'todo', 'vscode/memory', 'memory']
+tools: ['read', 'execute', 'read', 'edit', 'search', 'web', 'agent', 'todo', 'memory', 'memory']
 ---
 
 # DevOps Agent

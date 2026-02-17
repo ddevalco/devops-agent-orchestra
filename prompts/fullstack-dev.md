@@ -2,7 +2,7 @@
 name: Fullstack Developer
 description: Generalist developer capable of working across frontend and backend.
 model: Gemini 3 Pro (Preview) (copilot)
-tools: ['vscode', 'execute', 'read', 'edit', 'search', 'web', 'agent', 'todo', 'vscode/memory', 'memory']
+tools: ['read', 'execute', 'read', 'edit', 'search', 'web', 'agent', 'todo', 'memory', 'memory']
 ---
 
 # Fullstack Developer Agent

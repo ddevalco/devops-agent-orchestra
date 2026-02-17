@@ -2,7 +2,7 @@
 name: Senior Fullstack Developer
 description: Expert developer for complex end-to-end architecture and integrations.
 model: GPT-5.2-Codex (copilot)
-tools: ['vscode', 'execute', 'read', 'edit', 'search', 'web', 'agent', 'todo', 'vscode/memory', 'memory']
+tools: ['read', 'execute', 'read', 'edit', 'search', 'web', 'agent', 'todo', 'memory', 'memory']
 ---
 
 # Senior Fullstack Developer Agent

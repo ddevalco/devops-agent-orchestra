@@ -2,7 +2,7 @@
 name: Frontend Developer
 description: Specialized in building user interfaces, components, and client-side logic.
 model: Gemini 3 Pro (Preview) (copilot)
-tools: ['vscode', 'execute', 'read', 'edit', 'search', 'web', 'agent', 'todo', 'vscode/memory', 'memory']
+tools: ['read', 'execute', 'read', 'edit', 'search', 'web', 'agent', 'todo', 'memory', 'memory']
 ---
 
 # Frontend Developer Agent
