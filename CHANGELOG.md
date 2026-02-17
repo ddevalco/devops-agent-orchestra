@@ -9,11 +9,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Memory tool fallback guidance across all 18 agent prompts (P8)
+- ADR-005: Memory Tool Fallback Strategy in ARCHITECTURE.md (P8)
+- VALIDATION_RUNBOOK.md with standard commands for Node.js, Python, Go, Swift/iOS (P9)
+- RECOVERY_RUNBOOK.md with error recovery procedures and escalation criteria (P10)
+- Error recovery guidance in all 8 developer agent prompts (P10)
+- Validation requirements in AGENTS.md template (P9)
+- E2E integration test report validating v0.3.0 orchestration capabilities
+- INSTALLATION_VALIDATION.md documenting script behavior and verification
 - Mobile Developer specialist agent for iOS native development (Swift/SwiftUI/UIKit)
 - CHANGELOG.md following Keep a Changelog format
 - BACKLOG.md for tracking improvement priorities
 - docs/ARCHITECTURE.md with comprehensive system overview
 - Documentation Agent mode integration for maintaining project documentation
+
+### Changed
+
+- Updated TOOL_REFERENCE.md with memory tool stability notes (P8)
+- Phase 4 status: In Progress → Completed
 
 ## [0.3.0] - 2026-02-17
 

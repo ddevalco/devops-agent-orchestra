@@ -22,6 +22,23 @@ You create plans. You do NOT write code.
 - Mark truly independent packets as parallel.
 - Ask only blocking questions via `vscode/askQuestions`.
 
+## Memory Tool Fallback
+
+The `memory` tool is experimental and may not be available in all VS Code builds.
+
+**If memory tool is unavailable:**
+- Continue operation without memory storage (do not fail or block)
+- Document key learnings in output YAML under `learnings:` field
+- Orchestrator will aggregate learnings manually in final report
+
+**Example:**
+```yaml
+learnings:
+  - "Complex async workflows benefit from explicit state diagrams"
+  - "File overlap detection required 3-level dependency check"
+next_action: handoff_to_orchestrator
+```
+
 ## Output Contract
 ```yaml
 task_id: <id>

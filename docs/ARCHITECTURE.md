@@ -525,6 +525,40 @@ tools:
 - Reviewer quality depends on prompt design
 - Cannot bypass even for trusted agents
 
+### ADR-005: Memory Tool Fallback Strategy
+
+**Status:** Accepted  
+**Date:** 2026-02-17  
+**Context:** The `memory` (previously `vscode/memory`) tool is experimental and not available in all VS Code builds, creating non-deterministic agent behavior.
+
+**Decision:**
+
+- All agents must gracefully handle memory tool unavailability
+- When memory tool is unavailable, agents document learnings in output YAML under `learnings:` field
+- Orchestrator aggregates learnings manually from agent outputs
+- Memory tool availability does not block agent operation or task completion
+
+**Consequences:**
+
+- **Positive:** Agents work consistently across all VS Code versions
+- **Positive:** Zero failed tasks due to missing experimental tools
+- **Positive:** Learnings still captured (via YAML) even without persistent memory
+- **Negative:** Manual aggregation required when memory unavailable
+- **Negative:** Cross-session learning only works when memory tool present
+
+**Implementation:**
+
+- All 18 agent prompts include fallback guidance section
+- Output contracts include optional `learnings:` field
+- Orchestrator final reports aggregate learnings from all agents
+- TOOL_REFERENCE.md documents memory stability and fallback behavior
+
+**Alternatives Considered:**
+
+- Require memory tool (rejected: creates deployment dependency)
+- Remove memory tool entirely (rejected: loses valuable capability when available)
+- Memory-only agents vs non-memory agents (rejected: unnecessary agent sprawl)
+
 ---
 
 ## References

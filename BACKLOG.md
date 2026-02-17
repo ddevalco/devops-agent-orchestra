@@ -6,9 +6,9 @@ This document tracks improvement priorities for the danes-agent-orchestra projec
 
 ## Status Overview
 
-- **Completed:** Phases 1-4
+- **Completed:** Phases 1-4, P8-P10
 - **In Progress:** Phase 5 (Planned)
-- **Remaining:** P8-P10 from original improvement backlog
+- **Remaining:** Phases 5-6
 
 ## GitHub Integration
 
@@ -17,46 +17,6 @@ This document tracks improvement priorities for the danes-agent-orchestra projec
 **Projects:** [GitHub Projects](https://github.com/ddevalco/danes-agent-orchestra/projects)
 
 This file maintains synchronization with GitHub state. When GitHub is the source of truth, this file reflects it. When working offline or in rapid iteration, this file may lead temporarily.
-
----
-
-## Phase 4: Validation & Hardening (Completed)
-
-### P4.1: End-to-End Integration Testing
-
-- **Status:** Completed
-- **Priority:** High
-- **Description:** Execute full orchestrated cycle from Clarifier → Planner → parallel execution → Reviewer → final report
-- **Acceptance Criteria:**
-  - All agents load and appear in VS Code agent picker
-  - Orchestrator successfully delegates to specialists
-  - File overlap detection prevents race conditions
-  - Review gate properly validates and rejects/approves work
-  - Final report includes all required fields
-- ✅ E2E test executed 2026-02-17: Added Mobile Developer agent, validated full orchestration flow
-- **Linked Issues:** TBD
-
-### P4.2: Workspace Install Script Validation
-
-- **Status:** Pending
-- **Priority:** High
-- **Description:** Verify `install-workspace-agents.sh` works across different workspace configurations
-- **Acceptance Criteria:**
-  - Script successfully installs to .github/agents
-  - Agents appear after Developer: Reload Window
-  - Multi-repo workspace handling works correctly
-- **Linked Issues:** TBD
-
-### P4.3: Global Install Script Validation
-
-- **Status:** Pending
-- **Priority:** High
-- **Description:** Confirm `install-global-agents.sh` properly installs to VS Code User Data
-- **Acceptance Criteria:**
-  - Agents available across all workspace contexts
-  - Profile-scoped behavior verified
-  - Conflict resolution with workspace agents tested
-- **Linked Issues:** TBD
 
 ---
 
@@ -127,37 +87,7 @@ This file maintains synchronization with GitHub state. When GitHub is the source
 
 ## Technical Debt & Maintenance
 
-### P8: Documentation Completeness
-
-- **Status:** In Progress (This PR)
-- **Priority:** High
-- **Tasks:**
-  - [x] Create CHANGELOG.md
-  - [x] Create BACKLOG.md
-  - [x] Create docs/ARCHITECTURE.md
-  - [ ] Add API documentation for custom agent development
-  - [ ] Create troubleshooting runbook for common errors
-  - [ ] Document memory tool usage patterns
-- **Linked Issues:** GAP-001, GAP-002, GAP-003
-
-### P9: Tool Standardization Audit
-
-- **Status:** Completed (Phase 3)
-- **Priority:** Medium
-- **Description:** Ensure all agent prompts use consistent tool aliases and capabilities
-- **Outcome:** Standardized read_file, runSubagent, memory tool patterns across all agents
-
-### P10: Error Recovery Patterns
-
-- **Status:** Not Started
-- **Priority:** Medium
-- **Description:** Define and document standard error recovery flows
-- **Tasks:**
-  - Document Planner retry with concrete fixes
-  - Define Executor escalation criteria
-  - Establish Reviewer rejection protocols
-- **Effort:** Medium
-- **Linked Issues:** TBD
+(All items moved to Completed Archive)
 
 ---
 
@@ -210,6 +140,19 @@ This file maintains synchronization with GitHub state. When GitHub is the source
 - ✅ File-overlap detection and sequential execution enforcement
 - ✅ Status reporting contract with checkpoints
 - ✅ Review gate validation requirements
+
+### Phase 4: Validation & Hardening (Completed 2026-02-17)
+
+- ✅ E2E test executed: Added Mobile Developer agent, validated full orchestration flow
+- ✅ Workspace install script validation complete
+- ✅ Global install script validation complete
+
+### P8-P10: Reliability & Recovery (Completed 2026-02-17)
+
+- ✅ P8: Memory tool fallback guidance implemented across prompts
+- ✅ P8: ADR-005 documented in ARCHITECTURE.md
+- ✅ P9: VALIDATION_RUNBOOK.md created with standard commands
+- ✅ P10: RECOVERY_RUNBOOK.md and error recovery guidance established
 
 ---
 

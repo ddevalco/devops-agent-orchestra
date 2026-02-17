@@ -42,6 +42,22 @@ When work completes, immediately and automatically:
 
 This is operational hygiene. Do not ask permission.
 
+## Validation Requirements
+
+All implementation agents (Junior, Frontend, Backend, Fullstack, Senior variants, Mobile Developer, Data Engineer) MUST run validation before `handoff_to_reviewer`.
+
+**See:** [docs/VALIDATION_RUNBOOK.md](../docs/VALIDATION_RUNBOOK.md) for standard commands by project type.
+
+**Minimal validation steps:**
+
+1. Identify project type (Node.js, Python, Go, Swift/iOS)
+2. Run relevant lint/type-check commands
+3. Capture results in output YAML `validation:` field
+4. Fix simple failures (typos, imports) before review handoff
+5. Escalate complex failures per [RECOVERY_RUNBOOK.md](../docs/RECOVERY_RUNBOOK.md)
+
+**DO NOT bypass validation.** Reviewer will reject incomplete packets lacking validation results.
+
 ## Orchestrator Tool Boundaries
 
 When running in Orchestrator mode:
@@ -57,13 +73,6 @@ When running in Orchestrator mode:
 - Body lines ≤ 72 characters, hard-wrapped
 - Explain why and what; reference issues
 
-## Validation Requirements
-
-Before and after changes:
-
-- [Project-specific test command]
-- [Project-specific build command]
-- [Project-specific lint/type-check command]
 
 ## Documentation Discipline
 

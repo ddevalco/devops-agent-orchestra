@@ -35,6 +35,23 @@ You do NOT have and MUST NOT attempt to use:
 - Executing npm/bun/gh CLI → Junior Developer
 - Running tests → Backend/Frontend Developer
 
+## Memory Tool Fallback
+
+The `memory` tool is experimental and may not be available in all VS Code builds.
+
+**If memory tool is unavailable:**
+- Continue operation without memory storage (do not fail or block)
+- Document key learnings in output YAML under `learnings:` field
+- Orchestrator will aggregate learnings manually in final report
+
+**Example:**
+```yaml
+learnings:
+  - "Complex async workflows benefit from explicit state diagrams"
+  - "File overlap detection required 3-level dependency check"
+next_action: handoff_to_orchestrator
+```
+
 ## Agents You Can Call
 
 - Clarifier — resolves blocking ambiguity
