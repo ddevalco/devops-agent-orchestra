@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- None
+
+## [0.4.0] - 2026-02-17
+
+### Added
+
 - Memory tool fallback guidance across all 18 agent prompts (P8)
 - ADR-005: Memory Tool Fallback Strategy in ARCHITECTURE.md (P8)
 - VALIDATION_RUNBOOK.md with standard commands for Node.js, Python, Go, Swift/iOS (P9)
