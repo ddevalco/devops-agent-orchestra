@@ -104,7 +104,7 @@ If your shell cannot write to VS Code User Data directly, use **Configure Custom
 - `docs/` setup, availability, workflow, policy, runbook
 - `templates/` clarified requirements, execution plan/packet, review/final report templates
 - `scripts/` scaffolding and bulk install helpers
-- `runs/` example orchestration run artifacts
+- `runs/` local orchestration artifacts (gitignored)
 
 ## Added Improvements Over Upstream
 
