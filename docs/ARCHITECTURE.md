@@ -59,7 +59,7 @@ graph TB
         Reviewer
     end
     
-    subgraph "Tool Layer"
+    subgraph ToolLayer["Tool Layer"]
         ReadFile[read_file]
         RunSubagent[runSubagent]
         Memory[memory]
@@ -68,7 +68,7 @@ graph TB
         CLI[run_in_terminal]
     end
     
-    Specialists -.uses.-> Tool Layer
+    Specialists -.uses.-> ToolLayer
 ```
 
 ---
