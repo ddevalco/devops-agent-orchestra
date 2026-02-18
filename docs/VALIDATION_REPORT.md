@@ -15,8 +15,8 @@ Comprehensive validation of the `danes-agent-orchestra` project shows significan
 
 ## 2. Roster Equality Check
 
-- **Prompts Directory Count:** 17 files (16 specialists + 1 orchestrator).
-- **Orchestrator Registry:** 16 agents listed under "Agents You Can Call".
+- **Prompts Directory Count:** 18 files (17 specialists + 1 orchestrator).
+- **Orchestrator Registry:** 18 agents listed under "Agents You Can Call".
 - **Result:** ✅ PASS (1:1 mapping confirmed).
 
 ## 3. Tool Convention Compliance (Convention B)
@@ -32,7 +32,7 @@ Validation check for legacy strings (`read/readFile`, `terminal`, `vscode/memory
 
 - **Documentation Agent:** Tools updated to `['read', 'edit', 'execute', 'git', 'agent']`. ✅
 - **Prompt Writer:** Tools updated to `['read', 'edit', 'agent', 'memory']`. ✅
-- **Ghost Agent Removal:** `prompts/native-orchestrator-kickoff.md` successfully deleted. ✅
+- **~~Ghost Agent Removal~~** *(Historical - Phase 3)*: `prompts/native-orchestrator-kickoff.md` was deleted as part of Phase 3 cleanup. ✅
 - **Result:** ✅ PASS.
 
 ## 5. Documentation Completeness

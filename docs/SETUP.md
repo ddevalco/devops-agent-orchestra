@@ -85,9 +85,8 @@ The script creates `.vscode-agent-orchestration/` inside the target repo.
 ## Start flow
 
 1. Select `Orchestrator` from the chat agent dropdown.
-2. Paste `prompts/native-orchestrator-kickoff.md` (optional but recommended for repeatable kickoff).
-3. Provide your objective + constraints.
-4. Expect sequence: Clarifier (if needed) → Planner → specialist agent packet(s) → Reviewer → final report.
+2. Provide your objective + constraints.
+3. Expect sequence: Clarifier (if needed) → Planner → specialist agent packet(s) → Reviewer → final report.
 
 ## Important
 

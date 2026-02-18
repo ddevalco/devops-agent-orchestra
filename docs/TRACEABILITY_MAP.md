@@ -34,8 +34,9 @@ This document maps documentation claims to actual implementation evidence. Each 
 | DevOps | ✅ Yes | `prompts/devops.md` | VERIFIED | N/A |
 | Executor | ✅ Yes | `prompts/executor.md` | VERIFIED | N/A |
 | Reviewer | ✅ Yes | `prompts/reviewer.md` | VERIFIED | N/A |
+| Mobile Developer | ✅ Yes | `prompts/mobile-dev.md` | VERIFIED | N/A |
 
-**Summary:** 16/16 agents verified (100% fulfillment); 0 gaps
+**Summary:** 18/18 agents verified (100% fulfillment); 0 gaps
 
 ---
 
@@ -48,7 +49,7 @@ This document maps documentation claims to actual implementation evidence. Each 
 
 **Evidence:** Same as above (Orchestrator mapping)
 
-**Verdict:** ✅ **ACCURATE** - All 17 agents exist (filenames use abbreviated format)
+**Verdict:** ✅ **ACCURATE** - All 18 agents exist (filenames use abbreviated format)
 
 **Severity:** N/A - No gaps, roster complete
 
@@ -62,7 +63,7 @@ This document maps documentation claims to actual implementation evidence. Each 
 
 | Claimed Directory/Purpose | Expected Content | Actual Status | Evidence | Verdict |
 |--------------------------|------------------|---------------|----------|----------|
-| `prompts/` install-ready agent definitions | 17+ agent prompt files | 17 present | All agents verified | ✅ **COMPLETE** |
+| `prompts/` install-ready agent definitions | 18+ agent prompt files | 18 present | All agents verified | ✅ **COMPLETE** |
 | `docs/` setup, availability, workflow, policy, runbook | 5+ documentation files | 9+ present (missing only ARCHITECTURE.md) | Directory exists with comprehensive docs | ✅ **MOSTLY COMPLETE** |
 | `templates/` clarified requirements, execution plan/packet, review/final report templates | Multiple template files | AGENTS.md present with comprehensive guidance | Directory exists | ✅ **FUNCTIONAL** |
 | `scripts/` scaffolding and bulk install helpers | Install scripts | 2 install scripts present | Directory exists | ✅ **VERIFIED** |

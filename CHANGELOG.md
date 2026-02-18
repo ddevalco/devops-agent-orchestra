@@ -34,6 +34,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated TOOL_REFERENCE.md with memory tool stability notes (P8)
 - Phase 4 status: In Progress → Completed
 
+### Removed
+
+- prompts/native-orchestrator-kickoff.md ghost file (lacked frontmatter, no operational purpose)
+- All documentation references to native-orchestrator-kickoff workflow
+
 ## [0.3.0] - 2026-02-17
 
 ### Added

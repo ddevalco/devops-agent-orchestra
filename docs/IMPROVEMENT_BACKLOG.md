@@ -102,7 +102,7 @@ This backlog prioritizes 10 improvements ranked by their impact on:
 
 **Phase 1: Standardization (Week 1)**
 
-1. **Choose Convention B** (majority pattern - 16 agents already use it):
+1. **Choose Convention B** (majority pattern - 18 agents already use it):
 
    ```yaml
    tools: ['vscode', 'execute', 'read', 'edit', 'search', 'web', 'agent', 'todo', 'vscode/memory', 'memory']
@@ -143,48 +143,31 @@ This backlog prioritizes 10 improvements ranked by their impact on:
 
 ---
 
-### P3: Native Kickoff Ghost Agent
+### P3: Native Kickoff Ghost Agent ✅ COMPLETED
 
-**Issue:** `native-orchestrator-kickoff.md` exists but has no frontmatter, no documented purpose, not in orchestration flows.
+**Status:** RESOLVED - File deleted, all references removed (v0.4.0)
+
+**Issue:** `native-orchestrator-kickoff.md` existed but had no frontmatter, no documented purpose, not in orchestration flows.
 
 **Impact Analysis:**
 - **Autonomy (5/10):** 🟡 Moderate - confuses roster, unclear when to use
 - **Concurrency (1/10):** 🟢 Low - doesn't affect parallelization
 - **Traceability (9/10):** 🔴 High - breaks roster audits, onboarding friction
 
-**Symptoms:**
-- Appears in PROMPT_AUDIT.md as "Undocumented Agent"
+**Previous Symptoms:**
+- Appeared in PROMPT_AUDIT.md as "Undocumented Agent"
 - No references in README.md orchestration flows
-- Breaks tooling that parses frontmatter
+- Broke tooling that parses frontmatter
 
-**Recommended Fix:**
+**Resolution Applied:** Option B - File Removed
 
-**Option A: Document Purpose (if needed)**
+1. ✅ Deleted `prompts/native-orchestrator-kickoff.md`
+2. ✅ Removed all references in documentation
+3. ✅ Updated PROMPT_AUDIT.md
+4. ✅ Verified orchestration workflows operate correctly
 
-1. Add frontmatter:
-
-   ```yaml
-   ---
-   name: Native Orchestrator Kickoff
-   description: Provides initial coordination context when Orchestrator starts a new workflow.
-   model: Claude Sonnet 4.5 (copilot)
-   tools: ['read', 'agent']
-   ---
-   ```
-
-2. Update README.md workflow section to explain when to use it
-
-**Option B: Remove File (if obsolete)**
-
-1. Delete `prompts/native-orchestrator-kickoff.md`
-2. Remove any references in orchestration scripts
-3. Update PROMPT_AUDIT.md
-
-**Decision Required:** Interview user or check git history to determine original intent.
-
-**Effort:** 1-2 hours  
-**Dependencies:** User clarification on intent  
-**Testing:** Verify orchestration workflows operate without errors
+**Completed:** February 17, 2026 (v0.4.0)  
+**Validation:** E2E test passed with 18-agent roster
 
 ---
 

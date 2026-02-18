@@ -66,7 +66,7 @@ The implementation largely matches the documentation, but has non-deterministic 
 ### Critical Issues
 
 1. **Documentation Agent Non-Conformity:** Missing `Output Contract` section in [prompts/documentation-agent.md](../prompts/documentation-agent.md).
-2. **Kickoff Metadata:** [prompts/native-orchestrator-kickoff.md](../prompts/native-orchestrator-kickoff.md) lacks standard YAML frontmatter, preventing automated tool indexing.
+2. **~~Kickoff Metadata~~** *(RESOLVED - 2026-02-17)*: `native-orchestrator-kickoff.md` was removed as a ghost file with no frontmatter or purpose.
 3. **Handoff Naming Inconsistency:** Mix of `handoff_to_orchestrator`, `return_to_orchestrator`, and agent-specific tokens like `handoff_to_frontend`.
 4. **Platform Reality:** `runSubagent` is a blocking call. Parallelism is currently a conceptual optimization that is not reflected in actual execution timing.
 

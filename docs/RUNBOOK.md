@@ -6,7 +6,6 @@ Run a single orchestration cycle across one real task in your multi-repo workspa
 ## Step 1: Start thread
 - Open Copilot Chat in VS Code.
 - Select `Orchestrator` from the agent dropdown.
-- Use `prompts/native-orchestrator-kickoff.md` as the kickoff instruction.
 - Submit task objective and constraints.
 
 ## Step 2: Clarify and plan

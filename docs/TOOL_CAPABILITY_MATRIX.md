@@ -26,6 +26,7 @@ This document maps declared tools to actual capabilities and identifies autonomy
 | **Clarifier** | `vscode`, `read`, `search`, `agent`, `vscode/memory`, `memory`, `vscode/askQuestions` | Read files, search, ask questions, clarify requirements, sub-delegate | Write code, execute commands | ✅ None (by design - requirements only) |
 | **Documentation Agent** | `read/readFile`, `edit`, `terminal`, `git` | Read/write docs, run git/commit, execute shell commands | **Sub-delegate to other agents** | 🚨 **CRITICAL:** Cannot delegate - must implement everything itself |
 | **Junior Developer** | `vscode`, `execute`, `read`, `edit`, `search`, `web`, `agent`, `todo`, `vscode/memory`, `memory` | Full implementation (read/write/execute/search/delegate) | Nothing (technically) | ⚠️ **No technical guardrails** - same tools as Senior Fullstack |
+| **Mobile Developer** | `read`, `execute`, `edit`, `search`, `web`, `agent`, `todo`, `memory` | iOS native (Swift/SwiftUI) | Nothing | ✅ None (can escalate to Sr Fullstack) |
 | **Frontend Developer** | `vscode`, `execute`, `read`, `edit`, `search`, `web`, `agent`, `todo`, `vscode/memory`, `memory` | Full implementation capabilities | Nothing | ✅ None (can escalate via `agent`) |
 | **Backend Developer** | `vscode`, `execute`, `read`, `edit`, `search`, `web`, `agent`, `todo`, `vscode/memory`, `memory` | Full implementation capabilities | Nothing | ✅ None (can escalate via `agent`) |
 | **Fullstack Developer** | `vscode`, `execute`, `read`, `edit`, `search`, `web`, `agent`, `todo`, `vscode/memory`, `memory` | Full implementation capabilities | Nothing | ✅ None (can escalate via `agent`) |
@@ -56,7 +57,7 @@ tools: ['read/readFile', 'edit', 'terminal', 'git', 'agent', 'vscode/memory', 'm
 - Uses both `vscode/memory` and `memory`
 
 ### Convention B: Aggregate vscode Schema
-**Used by:** All other agents (16 agents)  
+**Used by:** All other agents (18 agents)  
 **Pattern:**
 ```yaml
 tools: ['vscode', 'execute', 'read', 'edit', 'search', 'web', 'agent', 'todo', 'vscode/memory', 'memory']
@@ -118,11 +119,12 @@ All developer roles (Junior, Frontend, Backend, Fullstack + Senior variants, Dat
 - **Fix:** Add `agent` tool to frontmatter, update prompt body with delegation guidance
 - **Affects:** All documentation workflows
 
-#### 2. Native Orchestrator Kickoff Ghost Agent
-- **Impact:** File exists but has no frontmatter, no documented purpose, breaks tool consistency
-- **Symptom:** Appears in roster audit but nowhere in orchestration flows
-- **Fix:** Document purpose OR remove file, update references
-- **Affects:** Onboarding, roster clarity
+### ~~Native Orchestrator Kickoff Ghost Agent~~ ✅ RESOLVED
+
+**Status:** RESOLVED - File deleted in Phase 3 (v0.4.0)  
+**Resolution Date:** 2026-02-17  
+**Original Issue:** Undocumented prompt file with no frontmatter or purpose  
+**Action Taken:** File deleted, all references purged from documentation
 
 #### 3. Tool Schema Fragmentation
 - **Impact:** 2 incompatible tool naming conventions in production
@@ -280,7 +282,7 @@ From [orchestrator.md](../prompts/orchestrator.md), the Orchestrator can run pac
 
 ## Appendix: Tool Comparison Table
 
-| Tool Name | Convention A (2 agents) | Convention B (16 agents) | Semantic Difference? |
+| Tool Name | Convention A (2 agents) | Convention B (18 agents) | Semantic Difference? |
 |-----------|-------------------------|--------------------------|----------------------|
 | File Read | `read/readFile` | `read` | ❓ Unclear - assumed equivalent |
 | File Edit | `edit` | `edit` | ✅ Consistent |

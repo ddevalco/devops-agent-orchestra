@@ -23,7 +23,6 @@ This audit evaluates the consistency across the agent prompts, the orchestrator'
 | **DevOps** | [devops.md](../prompts/devops.md) | ✅ | ✅ | Aligned |
 | **Executor** | [executor.md](../prompts/executor.md) | ✅ | ✅ | Aligned |
 | **Reviewer** | [reviewer.md](../prompts/reviewer.md) | ✅ | ✅ | Aligned |
-| **Native Kickoff** | [native-orchestrator-kickoff.md](../prompts/native-orchestrator-kickoff.md) | ❌ | ❌ | **Undocumented Agent** |
 
 ## 2. Tool Capability Matrix
 
@@ -41,7 +40,7 @@ This audit evaluates the consistency across the agent prompts, the orchestrator'
 
 1. **Schema Divergence:** `documentation-agent.md` and `orchestrator.md` use specific tool names like `read/readFile`, `terminal`, and `git`, while all other agents use the aggregate `vscode` tool schema with generic `read` and `execute` names. This causes registry fragmentation.
 2. **README Roster Gap:** The `Documentation Agent` is listed in `orchestrator.md` as a sub-agent but is missing from both the "Full roster" list and the "Agent Architecture" Mermaid diagram in the main `README.md`.
-3. **Ghost Agent:** `native-orchestrator-kickoff.md` exists in the `prompts/` directory but is not mentioned in any orchestration workflows or documentation. It also lacks the mandatory frontmatter (name, description, tools) present in all other prompts.
+3. **~~Ghost Agent~~** *(RESOLVED - 2026-02-17)*: `native-orchestrator-kickoff.md` was removed as it lacked frontmatter and had no operational purpose.
 4. **Handoff Token Mismatches:** Several agents (e.g., `Designer`) define handoff tokens like `handoff_to_frontend` or `handoff_to_planner`, but the standard `Orchestrator` contract expects `handoff_to_orchestrator` as the primary return path after task completion.
 5. **Over-Privileged Roles:** `Junior Developer` has the exact same toolset as `Senior Fullstack Developer`, including `web` search, `execute` terminal access, and `agent` sub-delegation. There are no technical guardrails in the prompt to restrict tool use based on role seniority.
 

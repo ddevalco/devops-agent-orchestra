@@ -143,8 +143,7 @@ If your shell cannot write to VS Code User Data directly, use **Configure Custom
 1. Open your target workspace in VS Code.
 2. Ensure prompts are installed (workspace/global).
 3. Select `Orchestrator` in the agent picker.
-4. Optionally paste `prompts/native-orchestrator-kickoff.md`.
-5. Provide objective + constraints + repo(s) in scope.
+4. Provide objective + constraints + repo(s) in scope.
 
 ## Project Layout
 

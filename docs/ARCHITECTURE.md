@@ -3,7 +3,7 @@
 This document provides a comprehensive overview of the danes-agent-orchestra system architecture, components, and operational patterns.
 
 **Last Updated:** 2026-02-17  
-**Version:** 0.3.0
+**Version:** 0.4.0
 
 ---
 
@@ -431,9 +431,8 @@ bash scripts/apply-scaffold.sh /path/to/target-repo
 1. VS Code loads agents from configured locations
 2. User sees agents in Chat Agent picker dropdown
 3. Select `@Orchestrator` to begin orchestration
-4. (Optional) Paste `prompts/native-orchestrator-kickoff.md` content
-5. Provide objective + constraints
-6. Orchestrator drives the lifecycle
+4. Provide objective + constraints
+5. Orchestrator drives the lifecycle
 
 ### Configuration Files
 
