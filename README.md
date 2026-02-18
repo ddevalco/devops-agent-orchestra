@@ -17,7 +17,7 @@ This project is inspired by [simkeyur/vscode-agents](https://github.com/simkeyur
 
 ## What You Get
 
-- **18 specialist agents** including: Clarifier, Orchestrator, Planner, Junior/Mobile/Frontend/Backend/Fullstack, Senior Frontend/Backend/Fullstack, Data Engineer, Designer, Prompt Writer, DevOps, Reviewer, plus fallback Executor. New Mobile Developer handles Swift/SwiftUI/iOS.
+- **18 specialist agents** including: Clarifier, Orchestrator, Planner, Junior/Mobile/Frontend/Backend/Fullstack, Senior Frontend/Backend/Fullstack, Data Engineer, Designer, Documentation Agent, Prompt Writer, DevOps, Reviewer, plus fallback Executor. New Mobile Developer handles Swift/SwiftUI/iOS.
 - Orchestrator-first workflow: you mostly select `Orchestrator`, provide objective + constraints, and let delegation happen.
 - File-overlap aware parallelization and reviewer gate before final reporting.
 - **Validation runbook** with standard test commands for Node.js, Python, Go, Swift/iOS.
