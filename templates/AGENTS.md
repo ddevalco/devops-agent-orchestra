@@ -16,6 +16,86 @@ This file defines project-specific constraints and protocols for human and agent
 - [ ] Never create `.agent-local/`, `.vscode-agent-orchestration/`, or similar workspace directories in the repository
 - [ ] Use `/tmp/` or in-memory structures for tracking/coordination
 
+## Available External Tools
+
+### Context7 (Web Search & Documentation)
+
+**Available to all agents.** Use Context7 when you need real-time information about external technologies, libraries, APIs, or best practices.
+
+**Invocation:**
+
+```text
+use context7 - <your specific question or research need>
+```
+
+**When to use:**
+
+- [ ] Researching unfamiliar libraries, frameworks, or tools
+- [ ] Looking up current API documentation
+- [ ] Finding code examples or implementation patterns
+- [ ] Checking latest best practices or security advisories
+- [ ] Verifying package versions or compatibility
+- [ ] Understanding domain-specific terminology
+- [ ] Researching architectural patterns or design decisions
+
+**When NOT to use:**
+
+- Information about the current codebase (use `read_file` instead)
+- General programming knowledge you already have
+- Information available in project README/docs
+- Questions answerable by reading existing code
+
+**Usage Examples:**
+
+```text
+Example 1: Before implementing OAuth2 flow with unfamiliar library
+"use context7 - Show me official documentation and best practices for implementing OAuth2 with the `oslo` library in TypeScript, including PKCE flow"
+
+Example 2: Researching current best practices
+"use context7 - What are React Server Components best practices in 2026? Include data fetching patterns and error handling"
+
+Example 3: Looking up API documentation
+"use context7 - Show me the official Stripe webhook API documentation including signature verification and event handling"
+
+Example 4: Package compatibility check
+"use context7 - Is TypeScript 5.4 compatible with Node.js 22? What are known issues?"
+```
+
+**Best Practices:**
+
+- Be specific in your queries (include versions, context, specific aspects)
+- Use during research/planning phase, not mid-implementation
+- Focus on one topic per query for better results
+- Don't use for information you already confidently know
+- Combine with code reading for internal codebase understanding
+- Document critical findings in project docs or use `memory` tool
+
+**Integration Examples by Agent Type:**
+
+- **Clarifier:** Research unfamiliar tech mentioned by user before asking questions
+- **Planner:** Look up architectural patterns before designing implementation
+- **Implementation Agents:** Find documentation and examples before coding with new libraries
+- **Senior Agents:** Research security implications and performance patterns
+- **DevOps:** Look up CI/CD patterns, deployment strategies, tool documentation
+- **Documentation Agent:** Verify technical accuracy, lookup documentation standards
+
+### Pre-Commit Safety Protocol (MANDATORY)
+
+Before `git add` or `git commit`, ALWAYS run:
+
+```bash
+# 1. Check for OS artifacts
+find . -name ".DS_Store" -o -name "Thumbs.db" -o -name "._*" | xargs rm -f 2>/dev/null
+
+# 2. Verify no artifacts remain
+find . -maxdepth 2 \( -name "val_*" -o -name "temp_*" -o -name "packet_*" -o -name ".DS_Store" \) 2>/dev/null
+
+# Should return NOTHING. If anything found, delete it.
+
+# 3. Only then proceed with selective add
+git add <specific-files>  # NEVER use -A or -a
+```
+
 ## Required Context Order
 
 Before substantial implementation, read in this order:

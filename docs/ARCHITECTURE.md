@@ -15,6 +15,7 @@ This document provides a comprehensive overview of the devops-agent-orchestra sy
 - [Communication Patterns](#communication-patterns)
 - [Concurrency Model](#concurrency-model)
 - [Tool Capability Matrix](#tool-capability-matrix)
+- [External Context Tools](#external-context-tools)
 - [Data Flow](#data-flow)
 - [Installation & Deployment](#installation--deployment)
 - [Design Decisions](#design-decisions)
@@ -359,6 +360,211 @@ tools_required: execute (gh CLI)
 
 ---
 
+## External Context Tools
+
+### Context7 MCP Server
+
+**Purpose:** Context7 is a Model Context Protocol (MCP) server that provides real-time web search and documentation lookup capabilities. It enables agents to access current information, API documentation, best practices, and code examples beyond their training data.
+
+**Invocation Syntax:**
+
+Include `use context7` followed by your specific query in your prompt:
+
+```text
+use context7 - <your specific question or research need>
+```
+
+**Key Capabilities:**
+
+1. **Documentation Lookup:** Access official docs for libraries, frameworks, and tools
+2. **API Reference Search:** Find current API signatures, parameters, and examples
+3. **Best Practices:** Research current standards and patterns (security, architecture, etc.)
+4. **Package Information:** Check versions, compatibility, deprecation notices
+5. **Code Examples:** Find implementation patterns and usage examples
+6. **Technology Research:** Learn about unfamiliar libraries, frameworks, or protocols
+
+**When to Use Context7:**
+
+Agents should invoke Context7 when they encounter:
+
+- ❓ **Knowledge gaps:** Unfamiliar libraries, frameworks, or tools mentioned in requirements
+- 📚 **Documentation needs:** Need official docs or API references
+- 🔍 **Research phase:** Beginning implementation in unfamiliar domain
+- ⚡ **Current information:** Need latest version info, security advisories, or deprecation notices
+- 🔒 **Security/compliance:** Researching security best practices or compliance requirements
+- 🎯 **Specific patterns:** Looking for idiomatic implementation patterns
+
+**When NOT to Use Context7:**
+
+- ✅ Information about the current codebase (use `read_file` instead)
+- ✅ General programming knowledge already well-understood
+- ✅ Information available in project README or documentation
+- ✅ Questions that can be answered by reading existing code
+
+**Example Scenarios:**
+
+```text
+Scenario 1: Researching unfamiliar library
+"use context7 - Show me official documentation and best practices for using the Zod library for TypeScript schema validation, including how to define nested schemas and custom validators"
+
+Scenario 2: Finding current best practices  
+"use context7 - What are current best practices for React error boundaries in 2026? Include handling of async errors and integration with error reporting services"
+
+Scenario 3: API documentation lookup
+"use context7 - Show me the official GitHub Actions workflow syntax documentation for matrix builds, including how to handle conditional steps and job dependencies"
+
+Scenario 4: Security research
+"use context7 - What are the OWASP recommended practices for preventing XSS in modern single-page applications? Include specific patterns for React/Vue"
+
+Scenario 5: Package compatibility
+"use context7 - Is Vite 5.x compatible with Svelte 5? What are the known issues or configuration requirements?"
+```
+
+**Integration with Agent Workflows:**
+
+#### Clarifier
+
+- Use when user mentions unfamiliar technologies
+- Research domain terminology before asking clarifying questions
+- Validate assumptions about technology capabilities
+
+**Example:**
+
+```text
+User mentions "implement OAuth2 with PKCE flow"
+→ use context7 - "Explain OAuth2 PKCE flow requirements and when it's mandatory vs optional"
+```
+
+#### Planner
+
+- Use when designing implementation for unfamiliar domains
+- Research architectural patterns before creating execution plan
+- Verify technology compatibility and integration points
+
+**Example:**
+
+```text
+Task involves integrating Stripe payment processing
+→ use context7 - "Show me Stripe API best practices for webhook handling, including security requirements and retry logic"
+```
+
+#### Implementation Agents (All Levels)
+
+- Use BEFORE implementing with new libraries/APIs
+- Research during "Pre-Implementation Research" phase
+- Look up specific syntax or patterns when stuck
+
+**Example:**
+
+```text
+Assigned to implement WebSocket reconnection logic
+→ use context7 - "What are best practices for WebSocket reconnection with exponential backoff? Show example implementations"
+```
+
+#### Senior Agents
+
+- Research architectural patterns and design decisions
+- Validate security implications of design choices
+- Look up performance optimization strategies
+
+**Example:**
+
+```text
+Designing caching strategy
+→ use context7 - "Compare Redis vs Memcached for session storage in 2026: performance, persistence, clustering capabilities"
+```
+
+#### Data Engineer
+
+- Look up SQL syntax for specific database engines
+- Research ETL patterns and tools
+- Find database-specific optimization techniques
+
+**Example:**
+
+```text
+Optimizing PostgreSQL query performance
+→ use context7 - "PostgreSQL query optimization techniques for complex joins with CTEs - show EXPLAIN analysis patterns"
+```
+
+#### DevOps
+
+- Research CI/CD patterns and tool capabilities
+- Look up deployment strategies and orchestration
+- Find infrastructure-as-code examples
+
+**Example:**
+
+```text
+Setting up GitHub Actions deployment
+→ use context7 - "GitHub Actions deployment to AWS ECS with blue-green deployment pattern - show complete workflow example"
+```
+
+#### Prompt Writer
+
+- Find prompt engineering best practices
+- Research LLM capabilities and limitations
+- Look up agent framework patterns
+
+**Example:**
+
+```text
+Designing agentic workflow prompts
+→ use context7 - "Best practices for multi-agent orchestration prompts in 2026 - include delegation patterns and error handling"
+```
+
+#### Documentation Agent
+
+- Verify accuracy of technical references
+- Look up latest documentation standards
+- Research accessibility and SEO best practices
+
+**Example:**
+
+```text
+Documenting API endpoints
+→ use context7 - "OpenAPI 3.1 specification best practices for documenting REST APIs with examples and error responses"
+```
+
+**Best Practices:**
+
+1. **Be Specific:** Include context, version numbers, and specific aspects you need
+2. **Use Early:** Query during research/planning phase, not mid-implementation
+3. **Focus Queries:** Ask about one topic at a time for better results
+4. **Include Keywords:** Mention specific technologies, versions, patterns
+5. **Don't Over-Use:** Only query when you have genuine knowledge gaps
+6. **Combine with Code Reading:** Use for external knowledge; read codebase for internal understanding
+7. **Document Findings:** If you learn something critical, consider using `memory` tool to store for future reference
+
+**Decision Flowchart:**
+
+```text
+Need information?
+  |
+  ├─ About current codebase? → read_file
+  ├─ General programming concept I understand? → proceed with existing knowledge  
+  ├─ Project-specific documentation? → read README/docs
+  └─ External library/API/pattern/best practice? → use context7
+```
+
+**Performance Considerations:**
+
+- Context7 queries add latency; use judiciously
+- Batch related questions into single query when possible
+- Cache learnings in project documentation for team benefit
+- Use `memory` tool for insights that apply across projects
+
+**Troubleshooting:**
+
+If Context7 query doesn't return useful results:
+
+1. **Reformulate:** Be more specific or use different keywords
+2. **Break Down:** Split complex queries into simpler sub-queries
+3. **Add Context:** Include technology versions, use cases, or constraints
+4. **Verify Spelling:** Ensure library/framework names are correct
+
+---
+
 ## Data Flow
 
 ### Execution Packet Structure
@@ -643,7 +849,66 @@ echo "tracking" > "$WORKSPACE/agents.md"
 rm -rf "$WORKSPACE"
 ```
 
-#### 1. Never Commit Temporary Artifacts
+#### 1. Operating System and Editor Artifacts (Comprehensive Blacklist)
+
+**NEVER commit these files under ANY circumstances:**
+
+#### macOS Artifacts
+
+- `.DS_Store` - Folder metadata (macOS Finder)
+- `.AppleDouble` - Resource fork storage
+- `.LSOverride` - Launch Services metadata
+- `._*` - Resource fork files
+- `.Spotlight-V100/` - Spotlight index
+- `.Trashes/` - Trash folder
+- `.fseventsd/` - File system events
+- `.TemporaryItems/` - Temporary items
+- `.VolumeIcon.icns` - Custom volume icons
+
+#### Windows Artifacts
+
+- `Thumbs.db` - Image thumbnail cache
+- `ehthumbs.db` - Enhanced thumbnail cache
+- `Desktop.ini` - Folder settings
+- `$RECYCLE.BIN/` - Recycle bin
+
+#### Linux Artifacts
+
+- `.directory` - KDE directory settings
+- `.Trash-*/` - Linux trash folders
+
+#### Editor/IDE Artifacts
+
+- `*.swp`, `*.swo`, `*.swn` - Vim swap files
+- `*~` - Vim/Emacs backup files
+- `.vscode/` - VS Code workspace (unless explicitly needed)
+- `.idea/` - JetBrains IDE settings
+- `*.iml` - IntelliJ module files
+- `.sublime-project`, `.sublime-workspace` - Sublime Text
+
+#### Agent-Generated Artifacts (Already Covered)
+
+- `val_*.txt`, `val_*.log` - Validation output
+- `temp_*.sh`, `temp_*.py`, `temp_*.js` - Temporary scripts
+- `ls_*.sh`, `ls_*.txt` - Directory listings
+- `packet_*.yaml`, `packet_*.yml` - Agent tracking
+- `analysis.txt`, `analysis_*.txt` - Agent analysis
+- `.agent-local/`, `.agent-*` - Agent workspaces
+- `.vscode-agent-orchestration/`, `.orchestrator-*` - Coordination
+- `.bundlesize.report.json` - Generated reports
+
+#### Why This Matters
+
+**OS artifacts (like .DS_Store) pollute git history:**
+
+- Not relevant to code
+- Cause noise in diffs
+- Different per developer's machine
+- Cannot be replicated across systems
+
+**Prevention is critical:** Once committed, these files appear in git history forever unless repo is cleaned with filter-branch/BFG.
+
+#### 2. Never Commit Temporary Artifacts
 
 The following file patterns MUST NEVER be committed to version control:
 
@@ -675,7 +940,7 @@ The following file patterns MUST NEVER be committed to version control:
 - `.tmp/`
 - `.agent-scratch/`
 
-#### 2. Pre-Commit Verification Protocol
+#### 3. Pre-Commit Verification Protocol
 
 Before executing `git commit` or `git add`, ALL agents MUST:
 
@@ -704,7 +969,57 @@ git add -A                          # Stages ALL files in repo
 git commit -am "message"            # Bypasses staging review
 ```
 
-#### 3. Validation Evidence Handling
+#### 3.1 Automated Pre-Commit Verification
+
+**Every agent MUST run this before `git add`:**
+
+```bash
+# Create verification script (agents should use this inline)
+verify_no_artifacts() {
+  local found=0
+  
+  # Check for OS artifacts
+  if find . -name ".DS_Store" -o -name "Thumbs.db" -o -name "Desktop.ini" | grep -q .; then
+    echo "❌ OS artifacts found (.DS_Store, Thumbs.db, etc.)"
+    find . -name ".DS_Store" -o -name "Thumbs.db" -o -name "Desktop.ini"
+    found=1
+  fi
+  
+  # Check for agent artifacts
+  if find . -maxdepth 2 -type f \( -name "val_*" -o -name "temp_*" -o -name "packet_*" -o -name "analysis.txt" \) | grep -q .; then
+    echo "❌ Agent artifacts found (val_*, temp_*, packet_*, analysis.txt)"
+    find . -maxdepth 2 -type f \( -name "val_*" -o -name "temp_*" -o -name "packet_*" -o -name "analysis.txt" \)
+    found=1
+  fi
+  
+  # Check for agent workspace directories
+  if find . -maxdepth 1 -type d \( -name ".agent-*" -o -name ".orchestrator-*" -o -name ".vscode-agent-*" \) | grep -q .; then
+    echo "❌ Agent workspace directories found"
+    find . -maxdepth 1 -type d \( -name ".agent-*" -o -name ".orchestrator-*" -o -name ".vscode-agent-*" \)
+    found=1
+  fi
+  
+  if [ $found -eq 0 ]; then
+    echo "✅ No artifacts detected"
+    return 0
+  else
+    echo ""
+    echo "🛑 COMMIT BLOCKED: Remove artifacts before committing"
+    return 1
+  fi
+}
+
+# Run verification
+verify_no_artifacts || exit 1
+```
+
+**When to run:**
+
+- BEFORE every `git add`
+- BEFORE every `git commit`
+- After validation completes (delete validation outputs)
+
+#### 4. Validation Evidence Handling
 
 When validation output is needed for PR comments, issues, or agent reports:
 
@@ -735,7 +1050,7 @@ git add validation_results.txt      # ❌ NEVER commit artifacts
 git commit -m "Add validation"      # ❌ WRONG
 ```
 
-#### 4. Standard .gitignore Patterns
+#### 5. Standard .gitignore Patterns
 
 Every project managed by agents MUST include these patterns in `.gitignore`. If missing, Documentation Agent or DevOps Agent should add them:
 
@@ -780,7 +1095,7 @@ Thumbs.db
 grep -E "^(val_|temp_|packet_|analysis\.txt)" .gitignore
 ```
 
-#### 5. Cleanup After Validation
+#### 6. Cleanup After Validation
 
 Agents MUST clean up temporary files immediately after use:
 
@@ -798,7 +1113,7 @@ rm val_lint.txt  # ✅ Clean up immediately
 - Run: `find . -name "val_*.txt" -o -name "temp_*.sh" -o -name "packet_*.yaml"`
 - If found, delete before handoff to next agent or user
 
-#### 6. Agent-Specific Guidance
+#### 7. Agent-Specific Guidance
 
 **DevOps Agent:**
 
@@ -823,7 +1138,7 @@ rm val_lint.txt  # ✅ Clean up immediately
 - Temporary files MUST be deleted before task completion
 - Never commit files that match artifact patterns
 
-#### 7. Recovery: Artifacts Already Committed
+#### 8. Recovery: Artifacts Already Committed
 
 If artifacts were accidentally committed:
 
