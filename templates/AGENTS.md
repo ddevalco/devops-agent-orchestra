@@ -58,6 +58,64 @@ This file defines project-specific constraints and protocols for human and agent
 - Planner output MUST include GitHub issue structure
 - DevOps creates issues before implementation begins
 
+## Document Creation & Validation Protocol
+
+**Before committing any markdown document:**
+
+### Rule: All Markdown Must Pass Validation
+
+**Agents with terminal access** (Frontend Dev, Backend Dev, DevOps, Documentation Agent):
+
+1. Create the document
+2. Run validation: `npx markdownlint <file>` or `bunx markdownlint <file>`
+3. Fix all errors before committing
+4. Include validation evidence in commit message
+
+**Agents without terminal access** (Junior Developer):
+
+1. Create the document
+2. **MANDATORY:** Hand off to an agent with terminal access for validation
+3. Do NOT commit until validation confirmed
+4. Document must show "0 errors" before commit
+
+### Handoff Pattern for Junior Developer
+
+When Junior Developer creates markdown:
+
+```yaml
+task: Create <document_name>.md
+status: created_pending_validation
+next_action: handoff_to_documentation_agent_or_frontend_dev
+reason: Junior Developer lacks terminal tools for markdownlint validation
+validation_required: true
+```
+
+### Validation Command Reference
+
+```bash
+# Single file
+npx markdownlint path/to/file.md
+
+# Directory
+npx markdownlint docs/
+
+# With auto-fix (use cautiously)
+npx markdownlint --fix path/to/file.md
+```
+
+### Enforcement
+
+- **Orchestrator:** When delegating document creation to Junior Dev, must also delegate validation to another agent
+- **Junior Developer:** Must explicitly state "pending validation" and hand off
+- **Reviewers:** Reject PRs with markdown lint errors
+
+### Why This Matters
+
+- Prevents lint errors in repository
+- Maintains documentation quality standards
+- Catches formatting issues before commit
+- Reduces cleanup work and back-and-forth
+
 ## Available External Tools
 
 ### Context7 (Web Search & Documentation)
