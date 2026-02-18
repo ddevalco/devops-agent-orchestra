@@ -118,6 +118,12 @@ This file maintains synchronization with GitHub state. When GitHub is the source
 
 ## Completed (Archive)
 
+### Phase 3.1: Markdown Linting (Completed 2026-02-17)
+
+- ✅ Reusable markdownlint scripts for checks and auto-fix
+- ✅ Cross-repo templates for markdownlint config and ignores
+- ✅ Markdown lint runbook with adoption and CI guidance
+
 ### Phase 1: Foundation (Completed 2026-02-03)
 
 - ✅ Folder structure migration from upstream

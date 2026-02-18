@@ -9,7 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- None
+- Markdown linting scripts for checks and auto-fix
+- Markdown lint runbook for cross-repo adoption
+- Markdown lint templates for config, ignore, and quick start
 
 ## [0.4.0] - 2026-02-17
 
