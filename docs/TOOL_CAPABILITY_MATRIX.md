@@ -1,8 +1,7 @@
 # Tool Capability Matrix
 
 **Generated:** February 17, 2026  
-**Source Analysis:** Prompt frontmatter + bodies across all 18 agent files  
-**Related:** [PROMPT_AUDIT.md](./PROMPT_AUDIT.md)
+**Source Analysis:** Prompt frontmatter + bodies across all 18 agent files
 
 ---
 
@@ -158,7 +157,7 @@ All developer roles (Junior, Frontend, Backend, Fullstack + Senior variants, Dat
 - **Issue:** Some agents use `handoff_to_frontend`, others use `handoff_to_orchestrator`
 - **Impact:** Orchestrator may misparse completion signals
 - **Fix:** Standardize on `next_action: handoff_to_orchestrator` for all completion paths
-- **Affects:** Coordination reliability (documented in PROMPT_AUDIT.md)
+- **Affects:** Coordination reliability
 
 #### 8. Memory Tool Stability
 - **Issue:** Prompts note `vscode/memory` is "experimental in some builds"
