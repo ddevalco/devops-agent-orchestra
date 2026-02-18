@@ -186,6 +186,27 @@ Plain text output or examples
 - First heading should be H1 (`# Title`)
 - All other top sections use H2 (`## Section`)
 
+**MD034 (no-bare-urls): Always wrap URLs in angle brackets or link syntax**
+
+```markdown
+❌ WRONG (bare URL):
+https://github.com/user/repo
+See documentation: https://docs.example.com
+
+✅ CORRECT (wrapped):
+<https://github.com/user/repo>
+See [documentation](https://docs.example.com)
+
+Alternative (angle brackets):
+Contact us: <mailto:team@example.com>
+```
+
+**Rule:** Never use bare URLs. Always use one of:
+
+- Angle brackets: `<https://url>`
+- Link syntax: `[text](https://url)`
+- Reference links: `[text][ref]` with `[ref]: https://url` at bottom
+
 **Heading Style:**
 
 - Use ATX-style headings (`## Heading`) NOT setext-style (underlines)
@@ -195,10 +216,11 @@ Plain text output or examples
 
 1. Verify NO heading level skips (MD001): Check H1→H2→H3 progression
 2. Verify ALL code blocks have language tags (MD040): Search for \`\`\` without language
-3. Run `npx markdownlint-cli2` on all modified .md files
-4. Auto-fix: `npx markdownlint-cli2 --fix`
-5. Manually fix remaining errors (MD001, MD040 not auto-fixable)
-6. Verify 0 errors before committing
+3. Verify ALL URLs wrapped (MD034): Search for `http` without < or [ markers
+4. Run `npx markdownlint-cli2` on all modified .md files
+5. Auto-fix: `npx markdownlint-cli2 --fix`
+6. Manually fix remaining errors (MD001, MD040 not auto-fixable)
+7. Verify 0 errors before committing
 
 ## Definition of Done
 

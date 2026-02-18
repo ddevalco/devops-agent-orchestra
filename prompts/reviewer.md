@@ -72,6 +72,19 @@ code here
 ‌```
 ```
 
+**MD034 (no-bare-urls):** URLs not wrapped in angle brackets or links
+
+```markdown
+Example violation:
+See https://github.com/user/repo for details
+
+Required fix (option 1):
+See <https://github.com/user/repo> for details
+
+Required fix (option 2):
+See [the repository](https://github.com/user/repo) for details
+```
+
 **MD022/MD031/MD032:** Missing blank lines (around headings/code/lists)
 
 **MD024:** Duplicate headings in same section
@@ -118,6 +131,10 @@ findings:
         file: "path/to/file.md"  
         line: 89
         description: "Code block missing language specifier"
+      - rule: MD034
+        file: "docs/README.md"
+        line: 156
+        description: "Bare URL not wrapped (use <url> or [text](url))"
 required_fixes:
   - "Run: npx markdownlint-cli2 --fix on modified files"
   - "Manually fix MD001: Add intermediate heading levels"
