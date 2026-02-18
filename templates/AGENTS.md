@@ -9,6 +9,13 @@ This file defines project-specific constraints and protocols for human and agent
 - **Repository:** [GitHub URL]
 - **Issue Tracker:** [GitHub Issues URL]
 
+## Pre-Work Safety Checklist
+
+**Before ANY work:**
+
+- [ ] Never create `.agent-local/`, `.vscode-agent-orchestration/`, or similar workspace directories in the repository
+- [ ] Use `/tmp/` or in-memory structures for tracking/coordination
+
 ## Required Context Order
 
 Before substantial implementation, read in this order:

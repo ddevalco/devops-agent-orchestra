@@ -604,6 +604,45 @@ tools:
 
 Agents have been observed committing temporary validation files, scripts, and tracking artifacts to repositories. These practices MUST be followed by all agents to maintain repository cleanliness.
 
+#### 0. Working Directory Hygiene
+
+**Rule 0: Never create agent workspace directories in user repositories**
+
+Agents must NEVER create these directories in a repository they're working on:
+
+- `.agent-local/`
+- `.vscode-agent-orchestration/`
+- `.orchestrator-workspace/`
+- `.agent-workspace/`
+- Any directory prefixed with `.agent-*` or `.orchestrator-*`
+
+**Why:** These directories may accidentally get committed if agents later use `git add -A`.
+
+**Where to work instead:**
+
+- Use system temp directories: `/tmp/agent-work-${RANDOM}/`
+- Use in-memory data structures
+- Use explicitly user-approved project directories (like `docs/`)
+- For orchestration tracking: use YAML in your response, not persistent files
+
+**Example violation:**
+
+```bash
+# BAD - creates directory in user repo
+mkdir .agent-local
+echo "tracking" > .agent-local/AGENTS.md
+```
+
+**Correct approach:**
+
+```bash
+# GOOD - use temp directory outside repo
+WORKSPACE=$(mktemp -d)
+echo "tracking" > "$WORKSPACE/agents.md"
+# ... do work ...
+rm -rf "$WORKSPACE"
+```
+
 #### 1. Never Commit Temporary Artifacts
 
 The following file patterns MUST NEVER be committed to version control:
