@@ -563,6 +563,597 @@ If Context7 query doesn't return useful results:
 3. **Add Context:** Include technology versions, use cases, or constraints
 4. **Verify Spelling:** Ensure library/framework names are correct
 
+### GitHub MCP Server
+
+**Purpose:** GitHub MCP Server provides programmatic access to GitHub's API for managing repositories, issues, pull requests, code search, and other GitHub operations. It enables agents to interact with GitHub directly without relying on CLI tools.
+
+**Invocation Syntax:**
+
+GitHub MCP tools are invoked through the MCP protocol. Agents can use tool-specific invocations such as:
+
+```typescript
+// Examples of GitHub MCP operations
+create_issue({owner, repo, title, body, labels})
+create_pull_request({owner, repo, head, base, title, body})
+search_repositories({query, sort, order})
+get_issue({owner, repo, issue_number})
+list_pull_requests({owner, repo, state, sort})
+search_code({query, repo, path})
+get_repository({owner, repo})
+create_or_update_file({owner, repo, path, content, message})
+```
+
+**Key Capabilities:**
+
+1. **Issue Management:** Create, read, update, close issues; add labels and assignees
+2. **Pull Request Operations:** Create PRs, review, merge, request reviewers, check status
+3. **Repository Operations:** Read repo metadata, check CI status, manage branches
+4. **Code Search:** Search code across repositories with advanced filters
+5. **File Operations:** Read, create, update files directly in repositories
+6. **Collaboration:** Assign reviewers, add comments, manage labels
+7. **Status Checks:** Monitor CI/CD pipeline status, check reviews
+
+**When to Use GitHub MCP:**
+
+Agents should use GitHub MCP when they need to:
+
+- 📝 **Create issues:** Document bugs, feature requests, or technical debt
+- 🔄 **Manage PRs:** Create, review, or check status of pull requests
+- 🔍 **Search GitHub:** Find code patterns, issues, or repos across GitHub
+- 📊 **Check CI status:** Verify pipeline health before deployment
+- 📂 **Repository operations:** Read metadata, check branches, view commits
+- 👥 **Collaboration:** Assign work, request reviews, manage project boards
+- 📖 **Read GitHub content:** Fetch issue details, PR comments, file contents
+
+**When NOT to Use GitHub MCP:**
+
+- ✅ Local git operations (use `git` commands: commit, branch, push, pull)
+- ✅ Running CI locally (use project test commands)
+- ✅ Code editing (use file edit tools)
+- ✅ Repository cloning (use `git clone`)
+
+**Example Scenarios:**
+
+```text
+Scenario 1: Creating issue for discovered bug
+GitHub MCP → create_issue({
+  owner: "myorg",
+  repo: "myproject", 
+  title: "Fix memory leak in WebSocket handler",
+  body: "Discovered during code review...",
+  labels: ["bug", "backend"]
+})
+
+Scenario 2: Checking PR review status before merge
+GitHub MCP → get_pull_request({
+  owner: "myorg",
+  repo: "myproject",
+  pull_number: 123
+})
+→ Review status: approved, CI: passing → Safe to merge
+
+Scenario 3: Searching for similar implementations
+GitHub MCP → search_code({
+  query: "WebSocket reconnection exponential backoff",
+  repo: "myorg/myproject"
+})
+
+Scenario 4: Creating PR after feature completion
+GitHub MCP → create_pull_request({
+  owner: "myorg",
+  repo: "myproject",
+  head: "feature/auth-improvements",
+  base: "main",
+  title: "Implement JWT refresh token rotation",
+  body: "Closes #456. Implements secure token rotation..."
+})
+
+Scenario 5: Checking CI status for deployment decision
+GitHub MCP → list_commits({owner, repo, sha})
+→ Check latest commit status
+→ All checks passing → Proceed with deployment
+```
+
+**Integration with Agent Workflows:**
+
+#### DevOps
+
+Primary user of GitHub MCP for automation and operations:
+
+- Create issues for deployment failures or infrastructure problems
+- Monitor CI/CD pipeline status across projects
+- Manage release PRs and version tags
+- Check repository health before deployments
+- Automate issue triage and labeling
+
+**Example:**
+
+```text
+DevOps detects deployment failure
+→ GitHub MCP: create_issue with error logs, failure context
+→ Label: "production", "urgent"
+→ Assign to on-call team
+```
+
+#### Junior Developer
+
+Use for basic GitHub operations (since Junior lacks full CLI access):
+
+- Create issues for bugs discovered during work
+- Check PR review status
+- Read issue requirements and acceptance criteria
+- View PR comments and feedback
+
+**Example:**
+
+```text
+Junior Dev finds bug during implementation
+→ GitHub MCP: create_issue
+→ Continue with assigned work
+```
+
+#### All Development Agents
+
+Use GitHub MCP when implementation requires GitHub context:
+
+- Search codebase for similar patterns before implementing
+- Check if issue already exists before creating duplicate
+- Read linked issue details for context
+- Verify PR conflicts before creating
+
+**Example:**
+
+```text
+Backend Dev implementing error handling
+→ GitHub MCP: search_code for existing error patterns
+→ Find consistent pattern in codebase
+→ Implement using same pattern
+```
+
+#### Documentation Agent
+
+Use for documentation-related GitHub operations:
+
+- Create issues for documentation gaps
+- Update documentation PRs
+- Check if docs are referenced in issues
+- Link documentation to related issues/PRs
+
+**Example:**
+
+```text
+Docs Agent updates API documentation
+→ GitHub MCP: search for related issues mentioning API
+→ Reference issues in CHANGELOG
+→ Create PR linking to all related work
+```
+
+#### Orchestrator (Via Delegation)
+
+Orchestrator doesn't use GitHub MCP directly but delegates:
+
+- Route GitHub operations to DevOps or Junior Dev
+- Check project status via GitHub before planning work
+- Verify CI health before starting implementation phases
+
+**Integration with Agent Workflows:**
+
+- **Pre-work:** Check issue details, PR status, CI health
+- **During work:** Search for patterns, check conflicts
+- **Post-work:** Create issues for follow-up, open PRs
+- **Coordination:** Assign issues, request reviews, update status
+
+**Best Practices:**
+
+1. **Prefer GitHub MCP over gh CLI:** Use MCP for consistency and better error handling
+2. **Batch Operations:** Group related GitHub operations to minimize API calls
+3. **Check Before Creating:** Search for existing issues/PRs before creating new ones
+4. **Include Context:** Always provide detailed descriptions in issues and PRs
+5. **Link Related Work:** Reference related issues, PRs, and commits
+6. **Use Labels Consistently:** Follow project labeling conventions
+7. **Monitor Rate Limits:** Be aware of GitHub API rate limits
+8. **Verify Permissions:** Ensure agent has necessary GitHub permissions
+
+**Decision Flowchart:**
+
+```text
+Need to interact with GitHub?
+  |
+  ├─ Local git operation (commit, branch, push)? → use git commands
+  ├─ Create/read/update GitHub issue? → use GitHub MCP
+  ├─ Manage pull request? → use GitHub MCP
+  ├─ Search code/repos on GitHub? → use GitHub MCP
+  ├─ Check CI/CD status? → use GitHub MCP
+  └─ Read/write files in repo? → use GitHub MCP (or git operations)
+```
+
+**Tool Selection: GitHub MCP vs gh CLI:**
+
+| Operation | Prefer | Why |
+|-----------|--------|-----|
+| Create issue | GitHub MCP | Better error handling, structured API |
+| Manage PR | GitHub MCP | Consistent interface, easier automation |
+| Search code | GitHub MCP | Advanced filters, better results |
+| CI status | GitHub MCP | Real-time status, detailed checks |
+| Local git ops | git commands | Direct, faster, no API limits |
+| Complex queries | GitHub MCP | Structured queries, pagination |
+
+**Performance Considerations:**
+
+- GitHub MCP calls consume API rate limits
+- Cache results when possible
+- Use search filters to reduce result sets
+- Prefer batch operations over repeated single calls
+
+**Troubleshooting:**
+
+If GitHub MCP operation fails:
+
+1. **Check Permissions:** Verify agent has necessary GitHub access
+2. **Verify Repo:** Ensure owner/repo names are correct
+3. **Check Rate Limits:** Review GitHub API rate limit status
+4. **Validate Input:** Ensure required fields are provided
+5. **Review Response:** Check error message for specific guidance
+
+### Playwright MCP Server
+
+**Purpose:** Playwright MCP Server provides browser automation capabilities for end-to-end testing, UI interaction testing, screenshot generation, and web application validation. It enables agents to programmatically control browsers and test web interfaces.
+
+**Invocation Syntax:**
+
+Playwright MCP tools are invoked through the MCP protocol:
+
+```typescript
+// Examples of Playwright MCP operations
+playwright_navigate({url})
+playwright_click({selector})
+playwright_fill({selector, value})
+playwright_screenshot({path, fullPage})
+playwright_evaluate({expression})
+playwright_wait_for_selector({selector, timeout})
+playwright_get_text({selector})
+playwright_press_key({selector, key})
+playwright_select_option({selector, value})
+```
+
+**Key Capabilities:**
+
+1. **Browser Navigation:** Open URLs, navigate forward/back, reload pages
+2. **Element Interaction:** Click, type, select, hover, drag-and-drop
+3. **Form Handling:** Fill inputs, submit forms, upload files
+4. **Assertions:** Check element visibility, text content, attributes
+5. **Screenshots:** Capture full page or element screenshots
+6. **Network Monitoring:** Intercept requests, mock responses, check API calls
+7. **Multi-browser:** Test across Chromium, Firefox, WebKit
+8. **Mobile Emulation:** Test responsive designs and mobile viewports
+
+**When to Use Playwright MCP:**
+
+Agents should use Playwright when they need to:
+
+- 🧪 **E2E Testing:** Create end-to-end tests for critical user flows
+- 🖱️ **UI Interaction Testing:** Validate complex UI behaviors and interactions
+- 📸 **Visual Testing:** Generate screenshots for documentation or visual regression
+- ✅ **Form Validation:** Test form behavior, validation, and submission
+- 🔄 **Workflow Testing:** Validate multi-step user workflows
+- 🌐 **Cross-browser Testing:** Ensure compatibility across browsers
+- 📱 **Mobile Testing:** Test responsive design and mobile UX
+- 🔗 **Integration Testing:** Test frontend-backend integration
+
+**When NOT to Use Playwright MCP:**
+
+- ✅ Unit tests (use project test framework: Jest, Vitest, pytest)
+- ✅ API testing (use curl, fetch, or API test tools)
+- ✅ Static analysis (use linters and type checkers)
+- ✅ Performance testing (use dedicated performance tools)
+- ✅ Load testing (use k6, Artillery, or similar tools)
+
+**Example Scenarios:**
+
+```text
+Scenario 1: E2E test for authentication flow
+playwright_navigate({url: "http://localhost:3000/login"})
+playwright_fill({selector: "#email", value: "test@example.com"})
+playwright_fill({selector: "#password", value: "testpass123"})
+playwright_click({selector: "button[type=submit]"})
+playwright_wait_for_selector({selector: "#dashboard"})
+→ Assert: User successfully logged in and sees dashboard
+
+Scenario 2: Screenshot generation for documentation
+playwright_navigate({url: "http://localhost:3000/app"})
+playwright_wait_for_selector({selector: ".thread-list"})
+playwright_screenshot({
+  path: "docs/screenshots/thread-list.png",
+  fullPage: true
+})
+→ Screenshot saved for README
+
+Scenario 3: Form validation testing
+playwright_navigate({url: "http://localhost:3000/settings"})
+playwright_fill({selector: "#username", value: ""})
+playwright_click({selector: "button.save"})
+playwright_wait_for_selector({selector: ".error-message"})
+playwright_get_text({selector: ".error-message"})
+→ Assert: "Username is required" message appears
+
+Scenario 4: Multi-step workflow testing
+playwright_navigate({url: "http://localhost:3000/app"})
+playwright_click({selector: "button.new-thread"})
+playwright_fill({selector: "textarea.message", value: "Test message"})
+playwright_click({selector: "button.send"})
+playwright_wait_for_selector({selector: ".message-sent"})
+→ Assert: Message appears in thread
+
+Scenario 5: Responsive design validation
+playwright_set_viewport({width: 375, height: 667})
+playwright_navigate({url: "http://localhost:3000"})
+playwright_screenshot({path: "mobile-view.png"})
+→ Assert: Mobile navigation menu visible
+```
+
+**Integration with Agent Workflows:**
+
+#### Frontend Developer
+
+Primary user for frontend testing:
+
+- Create E2E tests for new UI features
+- Test form interactions and validation
+- Validate responsive design changes
+- Generate screenshots for PR reviews
+- Test complex component interactions
+
+**Example:**
+
+```text
+Frontend Dev implements new modal dialog
+→ Write Playwright test: open modal, interact, close
+→ Test keyboard navigation (Escape key, Tab order)
+→ Verify accessibility attributes
+→ Capture screenshot for documentation
+```
+
+#### Senior Frontend Developer
+
+Advanced testing scenarios:
+
+- Test complex state management flows
+- Validate performance of UI interactions
+- Test progressive enhancement patterns
+- Create reusable test utilities and fixtures
+- Test WebSocket real-time updates
+
+**Example:**
+
+```text
+Senior Frontend optimizes data table
+→ Playwright: Test pagination, sorting, filtering
+→ Measure interaction performance
+→ Test with 1000+ rows
+→ Validate virtual scrolling behavior
+```
+
+#### Fullstack Developer
+
+Integration testing across stack:
+
+- Test frontend-backend data flow
+- Validate API integration in UI
+- Test authentication and authorization flows
+- End-to-end feature testing
+- Test error handling and edge cases
+
+**Example:**
+
+```text
+Fullstack implements checkout flow
+→ Playwright: Full checkout E2E test
+→ Test cart → payment → confirmation
+→ Verify backend receives correct data
+→ Check email notification (if applicable)
+```
+
+#### QA/Testing Agent
+
+Comprehensive test coverage:
+
+- Create test suites for regression testing
+- Test cross-browser compatibility
+- Generate test reports with screenshots
+- Validate accessibility compliance
+- Test edge cases and error scenarios
+
+**Example:**
+
+```text
+QA creates regression test suite
+→ Playwright: Test all critical user flows
+→ Run across Chromium, Firefox, WebKit
+→ Generate report with screenshots
+→ Document failing scenarios
+```
+
+#### Documentation Agent
+
+Documentation-related browser automation:
+
+- Generate screenshots for user guides
+- Create animated GIFs of workflows
+- Test documentation examples
+- Validate tutorial steps
+- Capture UI states for examples
+
+**Example:**
+
+```text
+Docs Agent updates user guide
+→ Playwright: Navigate through onboarding flow
+→ Capture screenshot at each step
+→ Save to docs/images/
+→ Reference in tutorial markdown
+```
+
+**Best Practices:**
+
+1. **Wait for Elements:** Always wait for elements before interacting
+2. **Use Specific Selectors:** Prefer data-testid over CSS classes
+3. **Test User Flows:** Focus on critical paths users take
+4. **Keep Tests Isolated:** Each test should be independent
+5. **Use Page Object Pattern:** Encapsulate page interactions
+6. **Test Accessibility:** Include keyboard navigation and ARIA checks
+7. **Handle Async:** Properly wait for API calls and state updates
+8. **Screenshot on Failure:** Capture state when tests fail
+9. **Test Realistic Scenarios:** Use realistic data and workflows
+10. **Clean Up:** Reset state between tests
+
+**Decision Flowchart:**
+
+```text
+Need to test something?
+  |
+  ├─ Pure function or component logic? → Unit test (Jest/Vitest)
+  ├─ API endpoint? → API test (curl/fetch)
+  ├─ User interaction in browser? → Playwright MCP
+  ├─ Multi-page workflow? → Playwright MCP
+  ├─ Visual appearance? → Playwright MCP (screenshot)
+  └─ Performance/load? → Dedicated performance tool
+```
+
+**Tool Selection Matrix:**
+
+| Test Type | Tool | When to Use |
+|-----------|------|-------------|
+| Unit test | Jest/Vitest | Pure logic, components in isolation |
+| Integration test | Jest + RTL | Component integration without browser |
+| E2E test | Playwright MCP | Full user workflows in real browser |
+| API test | curl/fetch | Backend endpoints without UI |
+| Visual test | Playwright MCP | Screenshot comparison, responsive design |
+| Accessibility | Playwright + axe | WCAG compliance, keyboard nav |
+
+**Performance Considerations:**
+
+- Playwright tests are slower than unit tests
+- Run critical path tests frequently, full suite periodically
+- Use headless mode for faster execution
+- Parallelize tests when possible
+- Cache browser contexts for faster startup
+
+**Integration Patterns:**
+
+```typescript
+// Example test structure
+test('user can create and view thread', async () => {
+  // Arrange: Navigate and setup
+  await playwright_navigate({url: 'http://localhost:8790/app'});
+  await playwright_wait_for_selector({selector: '.app-loaded'});
+  
+  // Act: Perform user actions
+  await playwright_click({selector: 'button.new-thread'});
+  await playwright_fill({selector: 'textarea', value: 'Test thread'});
+  await playwright_click({selector: 'button.create'});
+  
+  // Assert: Verify results
+  await playwright_wait_for_selector({selector: '.thread-created'});
+  const text = await playwright_get_text({selector: '.thread-title'});
+  // Verify text matches expected value
+});
+```
+
+**Troubleshooting:**
+
+If Playwright operation fails:
+
+1. **Check Selector:** Verify element selector is correct and unique
+2. **Wait for Element:** Ensure element is visible before interacting
+3. **Check Viewport:** Verify element is in viewport (scroll if needed)
+4. **Increase Timeout:** Some operations need more time
+5. **Check Browser Console:** Look for JavaScript errors
+6. **Screenshot Debugging:** Capture screenshot to see current state
+7. **Network Issues:** Check if API calls are completing
+8. **Timing Issues:** Add appropriate waits for async operations
+
+### MCP Tool Selection Matrix
+
+Use this matrix to quickly determine which tool to use for common development needs:
+
+| Need | Use This | Don't Use This | Rationale |
+|------|----------|----------------|-----------|
+| Web search, docs lookup | Context7 | GitHub MCP, Playwright | Context7 optimized for research |
+| Technical documentation | Context7 | Manual browsing | Faster, more targeted results |
+| Create GitHub issue | GitHub MCP | gh CLI | Better error handling, structured |
+| Read PR content | GitHub MCP | Manual browsing | Programmatic access, automation |
+| Manage pull requests | GitHub MCP | gh CLI | Consistent API, easier automation |
+| Check CI/CD status | GitHub MCP | Manual check | Real-time, automated monitoring |
+| E2E UI testing | Playwright MCP | Manual testing | Automated, repeatable, consistent |
+| Screenshot generation | Playwright MCP | Manual screenshots | Automated, batch processing |
+| Form validation testing | Playwright MCP | Unit tests | Tests real browser behavior |
+| Multi-page workflows | Playwright MCP | Manual testing | Validates complete user journeys |
+| Unit testing | Project test framework | Playwright | Faster, more focused |
+| API testing | curl/fetch/project tools | Playwright | More direct, simpler |
+| Browser automation | Playwright MCP | Manual interaction | Repeatable, faster at scale |
+| Git operations (commit, push) | git commands | GitHub MCP | Local operations, no API limits |
+| Local file operations | read/write tools | Any MCP | Direct file access, faster |
+| Code search (local) | search/grep | GitHub MCP | Local is faster |
+| Code search (GitHub-wide) | GitHub MCP | Local grep | Searches across all repos |
+| Package installation | npm/bun/pip | Any MCP | Standard package managers |
+| Build/compile | Project build tools | Any MCP | Native build system |
+
+**Decision Tree:**
+
+```text
+1. Need information about external tech?
+   → Use Context7 (web search, docs)
+
+2. Need to interact with GitHub (issues, PRs, search)?
+   ├─ Local git operation? → Use git commands
+   └─ GitHub platform operation? → Use GitHub MCP
+
+3. Need to test or automate browser?
+   ├─ Unit/logic test? → Use project test framework
+   ├─ API test? → Use curl/fetch
+   └─ UI/workflow test? → Use Playwright MCP
+
+4. Need to work with codebase?
+   → Use file tools (read, edit, search)
+```
+
+**Common Workflows:**
+
+**Workflow 1: Research → Implement → Test → Create PR**
+
+```text
+1. Context7: Research library and best practices
+2. File tools: Implement feature
+3. Playwright: Create E2E tests
+4. Project tools: Run unit tests and lints
+5. git: Commit changes
+6. GitHub MCP: Create pull request
+```
+
+**Workflow 2: Bug Fix → Document → Issue Tracking**
+
+```text
+1. GitHub MCP: Read issue details
+2. Context7: Research error patterns
+3. File tools: Implement fix
+4. Playwright: Add regression test
+5. git: Commit with issue reference
+6. GitHub MCP: Update issue, create PR
+```
+
+**Workflow 3: Feature Development → Documentation → Deployment**
+
+```text
+1. Context7: Research implementation approaches
+2. File tools: Implement feature
+3. Playwright: Create E2E tests
+4. File tools: Update documentation
+5. Playwright: Generate screenshots for docs
+6. git: Commit all changes
+7. GitHub MCP: Create PR with screenshots
+8. GitHub MCP: Check CI status before merge
+```
+
 ---
 
 ## Data Flow
