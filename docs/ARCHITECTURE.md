@@ -140,7 +140,7 @@ graph TB
 
 | Agent | Specialization | Escalation Path | Primary Tools |
 | ----- | -------------- | --------------- | ------------- |
-| **Junior Dev** | Basic features, bug fixes | → Frontend/Backend/Fullstack | read, edit, search |
+| **Junior Dev** | Basic features, bug fixes | → Frontend/Backend/Fullstack | read, edit, git, agent |
 | **Mobile Dev** | iOS native (Swift/SwiftUI) | → Sr Fullstack | read, edit, search, CLI |
 | **Frontend Dev** | UI, client-side logic | → Sr Frontend | read, edit, search, CLI |
 | **Backend Dev** | APIs, databases, services | → Sr Backend | read, edit, search, CLI |
@@ -309,9 +309,45 @@ def can_run_parallel(packet_a, packet_b):
 | `read_file` | All | Code inspection |
 | `search` | All | Symbol/pattern finding |
 | `edit` | Dev agents | Implementation |
+| `git` | Junior Dev, all Dev agents | Git version control operations (commit, branch, status) |
+| `execute` (CLI) | Dev agents, DevOps | Shell commands: npm, gh, bun, docker, etc. |
 | `run_in_terminal` | Dev, DevOps | Build, test, deploy |
 | `memory` | Senior agents | Long-term learning |
 | `askQuestions` | All | User clarification |
+
+**Note on Tool Distinction:**
+
+- `git` tool = Git operations only (commit, branch, status, diff, restore)
+- `execute`/`run_in_terminal` = Full shell/CLI access (npm, gh, bun, docker, pytest, go, etc.)
+- Junior Dev has git but NOT execute
+- Standard Dev agents (Frontend/Backend/Fullstack/Mobile) have both
+- DevOps specializes in operational CLI tasks (CI/CD, gh CLI, infra automation)
+
+### GitHub Operations Responsibility
+
+**GitHub CLI operations** (`gh issue`, `gh pr`, `gh repo`, etc.) require CLI tool access.
+
+**Responsible Agent:** DevOps
+
+DevOps agent has `execute` tool capability and handles:
+
+- Creating/updating/closing GitHub issues
+- Managing pull requests via CLI
+- Repository administration tasks
+- GitHub Actions workflow operations
+- Release management
+
+**Why Not Junior Dev?**
+
+Junior Dev has `git` tools (git commit, branch, status, restore) but NOT CLI execution (`gh`, `npm`, `bun`, etc.). For GitHub API operations, route to DevOps.
+
+**Example delegation from Orchestrator:**
+
+```yaml
+task: "Create GitHub issues for discovered bugs"
+assigned_to: DevOps
+tools_required: execute (gh CLI)
+```
 
 ### Tool Alias Standardization
 
@@ -557,6 +593,218 @@ tools:
 - Require memory tool (rejected: creates deployment dependency)
 - Remove memory tool entirely (rejected: loses valuable capability when available)
 - Memory-only agents vs non-memory agents (rejected: unnecessary agent sprawl)
+
+---
+
+## Operational Best Practices
+
+### Git Hygiene and Artifact Management
+
+**MANDATORY RULES FOR ALL AGENTS:**
+
+Agents have been observed committing temporary validation files, scripts, and tracking artifacts to repositories. These practices MUST be followed by all agents to maintain repository cleanliness.
+
+#### 1. Never Commit Temporary Artifacts
+
+The following file patterns MUST NEVER be committed to version control:
+
+**Validation Output Files:**
+
+- `val_*.txt`, `val_*.log`
+- `validation_output/` directory
+- `test_results_*.xml`
+- `coverage_*.json`
+
+**Temporary Scripts:**
+
+- `temp_*.sh`, `temp_*.py`, `temp_*.js`
+- `ls_*.sh`, `check_*.sh`
+- `debug_*.py`
+- `scratch_*.ts`
+
+**Agent Tracking Files:**
+
+- `packet_*.yaml`, `packet_*.yml`
+- `analysis.txt`, `analysis_*.md`
+- `agent_output_*.txt`
+- `work_status_*.yaml`
+
+**Agent Workspace Directories:**
+
+- `.agent-local/`
+- `.vscode-agent-orchestration/`
+- `.tmp/`
+- `.agent-scratch/`
+
+#### 2. Pre-Commit Verification Protocol
+
+Before executing `git commit` or `git add`, ALL agents MUST:
+
+1. **Run `git status`** and carefully review the file list
+2. **Verify only intended files are staged** (no temporary artifacts)
+3. **Check for artifact patterns** listed above
+4. **Remove any temporary files** before committing
+5. **Use selective staging** (`git add <specific-file>`) rather than `git add -A` or `git add .`
+
+**Example Safe Workflow:**
+
+```bash
+# After making changes
+git status                          # Review ALL changes
+git add src/specific/file.ts        # Stage ONLY intended files
+git add docs/ARCHITECTURE.md        # Stage documentation updates
+git status                          # Verify staging area one more time
+git commit -m "feat: add feature"   # Commit
+```
+
+**Never Do:**
+
+```bash
+git add .                           # Stages EVERYTHING including artifacts
+git add -A                          # Stages ALL files in repo
+git commit -am "message"            # Bypasses staging review
+```
+
+#### 3. Validation Evidence Handling
+
+When validation output is needed for PR comments, issues, or agent reports:
+
+**Correct Pattern:**
+
+```bash
+# Capture output to temporary file
+npm run test > val_test_output.txt 2>&1
+
+# Read file contents
+cat val_test_output.txt
+
+# Include contents in PR comment or agent output
+gh pr comment 123 --body "$(cat val_test_output.txt)"
+
+# Clean up temporary file
+rm val_test_output.txt
+
+# Verify not staged
+git status | grep val_test_output.txt  # Should be empty
+```
+
+**Incorrect Pattern:**
+
+```bash
+npm run test > validation_results.txt
+git add validation_results.txt      # ❌ NEVER commit artifacts
+git commit -m "Add validation"      # ❌ WRONG
+```
+
+#### 4. Standard .gitignore Patterns
+
+Every project managed by agents MUST include these patterns in `.gitignore`. If missing, Documentation Agent or DevOps Agent should add them:
+
+```gitignore
+# Agent artifacts (REQUIRED)
+.agent-local/
+.vscode-agent-orchestration/
+.tmp/
+.agent-scratch/
+val_*.txt
+val_*.log
+temp_*.sh
+temp_*.py
+temp_*.js
+temp_*.ts
+ls_*.sh
+check_*.sh
+debug_*.py
+scratch_*.ts
+packet_*.yaml
+packet_*.yml
+analysis.txt
+analysis_*.md
+agent_output_*.txt
+work_status_*.yaml
+validation_output/
+test_results_*.xml
+coverage_*.json
+
+# OS files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+```
+
+**Verification Command:**
+
+```bash
+# Check if artifact patterns are in .gitignore
+grep -E "^(val_|temp_|packet_|analysis\.txt)" .gitignore
+```
+
+#### 5. Cleanup After Validation
+
+Agents MUST clean up temporary files immediately after use:
+
+```bash
+# Pattern: validation → capture → use → cleanup
+npm run lint > val_lint.txt 2>&1
+lint_result=$(cat val_lint.txt)
+echo "Lint results stored in agent output"
+rm val_lint.txt  # ✅ Clean up immediately
+```
+
+**Before Handoff:**
+
+- Verify no `val_*`, `temp_*`, `packet_*` files exist in workspace
+- Run: `find . -name "val_*.txt" -o -name "temp_*.sh" -o -name "packet_*.yaml"`
+- If found, delete before handoff to next agent or user
+
+#### 6. Agent-Specific Guidance
+
+**DevOps Agent:**
+
+- When running validation commands (linting, testing, builds), always use temporary files with artifact patterns
+- Clean up after capturing results
+- Update project `.gitignore` if artifact patterns are missing
+
+**Junior Developer / All Implementation Agents:**
+
+- Before staging changes, run `git status` and verify all files are intentional
+- Never use `git add .` or `git add -A` without careful review
+- If you see artifact files in `git status`, delete them before committing
+
+**Documentation Agent:**
+
+- If you discover a project lacking artifact patterns in `.gitignore`, add them
+- Document this update in commit message as "chore: improve .gitignore with agent artifact patterns"
+
+**All Agents:**
+
+- If you create a file starting with `temp_`, `val_`, `packet_`, `analysis`, it MUST be temporary
+- Temporary files MUST be deleted before task completion
+- Never commit files that match artifact patterns
+
+#### 7. Recovery: Artifacts Already Committed
+
+If artifacts were accidentally committed:
+
+```bash
+# Remove from current commit (not yet pushed)
+git reset HEAD~1
+git add <only-intended-files>
+git commit -m "original message"
+
+# Remove from history (already pushed - use with caution)
+git rm --cached val_*.txt temp_*.sh packet_*.yaml
+git commit -m "chore: remove accidentally committed agent artifacts"
+git push
+```
+
+**Report to User:**
+
+- Document which artifacts were removed
+- Explain why they were committed (e.g., "validation files were accidentally staged")
+- Confirm prevention measures are in place (`.gitignore` updated)
 
 ---
 

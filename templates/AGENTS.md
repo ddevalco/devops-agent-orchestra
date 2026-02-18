@@ -78,6 +78,24 @@ When running in Orchestrator mode:
 - You do NOT have: file editing, CLI, git operations
 - Delegate ALL execution work to specialist agents
 
+## Git Hygiene and Artifacts
+
+**NEVER commit temporary artifacts:**
+
+- Validation files: `val_*.txt`, `val_*.log`
+- Temporary scripts: `temp_*.sh`, `temp_*.py`, `ls_*.sh`
+- Agent tracking: `packet_*.yaml`, `analysis.txt`
+- Agent workspace: `.agent-local/`, `.tmp/`
+
+**Before every commit:**
+
+1. Run `git status` and review ALL files
+2. Verify no temporary artifacts are staged
+3. Use selective staging: `git add <specific-file>` (NEVER `git add .` or `git add -A`)
+4. Clean up validation output files after capturing results
+
+**See:** [docs/ARCHITECTURE.md](../docs/ARCHITECTURE.md#git-hygiene-and-artifact-management) for complete rules and recovery procedures.
+
 ## Commit Message Standards (50/72 rule)
 
 - Subject line ≤ 50 characters, imperative mood, no period
