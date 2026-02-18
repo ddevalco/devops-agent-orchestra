@@ -86,6 +86,40 @@ xcodebuild test -scheme <SchemeName> -destination 'platform=iOS Simulator,name=i
 
 ---
 
+## Markdown Documentation
+
+**For any repository with .md files**
+
+### Standard Check
+
+```bash
+# Check all markdown files
+npx markdownlint-cli2 "**/*.md" "!node_modules"
+
+# Expected: Summary: 0 error(s)
+```
+
+### Auto-Fix
+
+```bash
+# Fix auto-correctable issues
+npx markdownlint-cli2 "**/*.md" "!node_modules" --fix
+
+# Verify
+npx markdownlint-cli2 "**/*.md" "!node_modules"
+```
+
+### Common Manual Fixes
+
+```bash
+# MD029: Fix ordered list numbering (start at 1)
+# MD003: Convert setext headings to ATX style (## Heading)
+```
+
+**Pass Criteria:** `Summary: 0 error(s)`
+
+---
+
 ## Validation Workflow
 
 1. **Identify Project Type:** Check for package.json, requirements.txt, go.mod, .xcodeproj

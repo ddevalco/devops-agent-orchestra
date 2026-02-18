@@ -31,11 +31,13 @@ You implement robust backend features and API logic.
 The `memory` tool is experimental and may not be available in all VS Code builds.
 
 **If memory tool is unavailable:**
+
 - Continue operation without memory storage (do not fail or block)
 - Document key learnings in output YAML under `learnings:` field
 - Orchestrator will aggregate learnings manually in final report
 
 **Example:**
+
 ```yaml
 learnings:
   - "Complex async workflows benefit from explicit state diagrams"
@@ -48,10 +50,12 @@ next_action: handoff_to_orchestrator
 When validation or implementation fails, follow recovery procedures in [docs/RECOVERY_RUNBOOK.md](../docs/RECOVERY_RUNBOOK.md).
 
 **Quick decision guide:**
+
 - ✅ **Retry yourself (1-2 attempts):** Typos, missing imports, simple syntax errors
 - ❌ **Escalate immediately:** Architecture issues, security concerns, performance problems, cross-service failures
 
 **Recovery steps:**
+
 1. Capture full error output
 2. If fixable (typo/import): Fix and re-validate
 3. If complex: Git restore changes and escalate to Orchestrator with blocker details

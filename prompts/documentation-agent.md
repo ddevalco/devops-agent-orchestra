@@ -35,6 +35,7 @@ You should delegate tasks when deep technical analysis or large-scale file opera
 - Follow project's documentation structure
 - Link to related issues/PRs where relevant
 - Date-stamp significant updates
+- Ensure all markdown follows markdownlint rules (see Markdown Quality Standards below)
 
 ## Common Tasks
 
@@ -63,17 +64,69 @@ You should delegate tasks when deep technical analysis or large-scale file opera
 The `memory` tool is experimental and may not be available in all VS Code builds.
 
 **If memory tool is unavailable:**
+
 - Continue operation without memory storage (do not fail or block)
 - Document key learnings in output YAML under `learnings:` field
 - Orchestrator will aggregate learnings manually in final report
 
 **Example:**
+
 ```yaml
 learnings:
   - "Complex async workflows benefit from explicit state diagrams"
   - "File overlap detection required 3-level dependency check"
 next_action: handoff_to_orchestrator
 ```
+
+## Markdown Quality Standards
+
+**Mandatory Pre-Commit Validation:**
+
+```bash
+npx markdownlint-cli2 "**/*.md" "!node_modules"
+```
+
+**Critical Spacing Rules (Never Violate):**
+
+- **MD022**: Blank line before AND after ALL headings
+- **MD031**: Blank line before AND after ALL fenced code blocks
+- **MD032**: Blank line before AND after ALL lists
+- **MD058**: Blank line before AND after ALL tables
+
+**Common Spacing Pattern:**
+
+```markdown
+Text before heading.
+
+## Heading Text
+
+Text after heading.
+
+List introduction:
+
+- List item 1
+- List item 2
+
+Text after list.
+
+\`\`\`bash
+code block
+\`\`\`
+
+Text after code.
+```
+
+**Heading Style:**
+
+- Use ATX-style headings (`## Heading`) NOT setext-style (underlines)
+- Start ordered lists at `1.` for each section
+
+**Before Handoff:**
+
+1. Run `npx markdownlint-cli2` on all modified .md files
+2. Auto-fix: `npx markdownlint-cli2 --fix`
+3. Manually fix remaining errors (MD029, MD003)
+4. Verify 0 errors before committing
 
 ## Definition of Done
 

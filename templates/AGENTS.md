@@ -56,6 +56,18 @@ All implementation agents (Junior, Frontend, Backend, Fullstack, Senior variants
 4. Fix simple failures (typos, imports) before review handoff
 5. Escalate complex failures per [RECOVERY_RUNBOOK.md](../docs/RECOVERY_RUNBOOK.md)
 
+### Markdown Validation
+
+**When ANY .md files modified:**
+
+```bash
+npx markdownlint-cli2 "**/*.md" "!node_modules"
+```
+
+- Must show 0 errors before handoff to Reviewer
+- Auto-fix available: add `--fix` flag
+- See: [docs/MARKDOWN_LINT_RUNBOOK.md](../docs/MARKDOWN_LINT_RUNBOOK.md)
+
 **DO NOT bypass validation.** Reviewer will reject incomplete packets lacking validation results.
 
 ## Orchestrator Tool Boundaries
@@ -72,7 +84,6 @@ When running in Orchestrator mode:
 - Blank line between subject and body
 - Body lines ≤ 72 characters, hard-wrapped
 - Explain why and what; reference issues
-
 
 ## Documentation Discipline
 

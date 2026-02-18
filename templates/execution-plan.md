@@ -6,15 +6,21 @@
   - phase:
     objective:
     packets:
-      - packet_id:
+
+  - packet_id:
         goal:
-        touched_files:
+        touched_files
           -
-        depends_on:
+
+        depends_on
           -
-        validation:
+
+        validation
           -
+
         risk: low|medium|high
+
 - assumptions:
-  -
+  - (add assumption)
+
 - next_action: handoff_to_orchestrator

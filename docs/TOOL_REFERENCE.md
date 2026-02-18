@@ -74,4 +74,3 @@ next_action: handoff_to_orchestrator
 - All agents should gracefully handle memory tool unavailability
 - Must not fail or block when memory tool is missing
 - Include learnings in output YAML when memory storage fails
-

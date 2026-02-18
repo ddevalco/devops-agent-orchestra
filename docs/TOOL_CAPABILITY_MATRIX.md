@@ -45,29 +45,38 @@ This document maps declared tools to actual capabilities and identifies autonomy
 ## 2. Tool Naming Conventions by Agent
 
 ### Convention A: Specific Tool Names
+
 **Used by:** Orchestrator, Documentation Agent  
 **Pattern:**
+
 ```yaml
 tools: ['read/readFile', 'edit', 'terminal', 'git', 'agent', 'vscode/memory', 'memory']
 ```
+
 **Characteristics:**
+
 - Granular tool names (`read/readFile` vs `read`)
 - Explicit git operations (`git` separate from `terminal`)
 - Uses both `vscode/memory` and `memory`
 
 ### Convention B: Aggregate vscode Schema
+
 **Used by:** All other agents (18 agents)  
 **Pattern:**
+
 ```yaml
 tools: ['vscode', 'execute', 'read', 'edit', 'search', 'web', 'agent', 'todo', 'vscode/memory', 'memory']
 ```
+
 **Characteristics:**
+
 - Uses `vscode` aggregate (unclear what this encompasses)
 - Generic `read` (not `read/readFile`)
 - Generic `execute` (not `terminal`)
 - Some include `vscode/askQuestions` (Planner, Clarifier only)
 
 ### Impact
+
 - **Tool discovery ambiguity:** Does `vscode` include git? Terminal? File system operations?
 - **Regression risk:** Changing one convention affects 2 agents, the other affects 16
 - **Onboarding friction:** New agents must choose a convention with no clear guidance
@@ -77,6 +86,7 @@ tools: ['vscode', 'execute', 'read', 'edit', 'search', 'web', 'agent', 'todo', '
 ## 3. Tool-to-Capability Mapping
 
 ### Read-Only Agents (3)
+
 | Agent | Primary Role | Declared Read Tools | Edit Capability |
 |-------|--------------|---------------------|-----------------|
 | Orchestrator | Coordination | `read/readFile` | ❌ None |
@@ -86,6 +96,7 @@ tools: ['vscode', 'execute', 'read', 'edit', 'search', 'web', 'agent', 'todo', '
 **Autonomy Impact:** ✅ Appropriate constraints - these agents delegate implementation work
 
 ### Research + Design Agents (2)
+
 | Agent | Primary Role | Can Write? | Must Delegate? |
 |-------|--------------|-----------|----------------|
 | Designer | UX/Design specs | ❌ No `edit` | ✅ Yes (to Frontend) |
@@ -94,12 +105,15 @@ tools: ['vscode', 'execute', 'read', 'edit', 'search', 'web', 'agent', 'todo', '
 **Autonomy Impact:** ⚠️ Prompt Writer may need direct `edit` access to iterate on prompt files
 
 ### Full-Capability Implementation Agents (11)
+
 All developer roles (Junior, Frontend, Backend, Fullstack + Senior variants, Data Engineer, DevOps, Executor) have identical tooling:
+
 - `vscode`, `execute`, `read`, `edit`, `search`, `web`, `agent`, `todo`, `vscode/memory`, `memory`
 
 **Autonomy Impact:** ⚠️ No technical differentiation between Junior and Senior roles
 
 ### Standalone Specialized Agent (1)
+
 | Agent | Tools | Can Delegate? | Autonomy Blocker |
 |-------|-------|---------------|------------------|
 | Documentation Agent | `read/readFile`, `edit`, `terminal`, `git` | ❌ **No `agent` tool** | 🚨 **Cannot escalate or get help** |
@@ -113,6 +127,7 @@ All developer roles (Junior, Frontend, Backend, Fullstack + Senior variants, Dat
 ### 🚨 Critical Blockers (Require immediate fix)
 
 #### 1. Documentation Agent Missing Sub-Delegation
+
 - **Impact:** Cannot get help with complex tasks (e.g., analyzing architecture, generating diagrams)
 - **Symptom:** Must implement everything itself or fail
 - **Fix:** Add `agent` tool to frontmatter, update prompt body with delegation guidance
@@ -126,6 +141,7 @@ All developer roles (Junior, Frontend, Backend, Fullstack + Senior variants, Dat
 **Action Taken:** File deleted, all references purged from documentation
 
 #### 3. Tool Schema Fragmentation
+
 - **Impact:** 2 incompatible tool naming conventions in production
 - **Symptom:** Orchestrator uses `read/readFile`, developers use `read` - which wins?
 - **Fix:** Standardize all prompts on one convention (recommend Convention B for majority)
@@ -134,18 +150,21 @@ All developer roles (Junior, Frontend, Backend, Fullstack + Senior variants, Dat
 ### ⚠️ High-Priority Issues (Impact deployment reliability)
 
 #### 4. Planner Tool/Role Mismatch
+
 - **Issue:** Has `execute` tool but prompt forbids writing code
 - **Impact:** Confusing capability surface - why have a tool you cannot use?
 - **Fix:** Remove `execute` from Planner tools, or document its intended use case
 - **Affects:** Planner autonomy, tool contract clarity
 
 #### 5. Junior Developer Over-Privileged
+
 - **Issue:** Identical toolset to Senior Fullstack (no technical guardrails)
 - **Impact:** Cannot enforce complexity routing via tooling
 - **Fix:** Consider tool restrictions OR explicit escalation triggers in prompt body
 - **Affects:** Work routing, quality control
 
 #### 6. Prompt Writer Cannot Write Files
+
 - **Issue:** Has `agent` but no `edit` - must delegate to create prompt files
 - **Impact:** Extra coordination overhead for simple file writes
 - **Fix:** Add `edit` tool OR document delegation pattern to Junior Developer
@@ -154,24 +173,28 @@ All developer roles (Junior, Frontend, Backend, Fullstack + Senior variants, Dat
 ### 📋 Medium-Priority Issues (Technical debt)
 
 #### 7. Handoff Token Inconsistencies
+
 - **Issue:** Some agents use `handoff_to_frontend`, others use `handoff_to_orchestrator`
 - **Impact:** Orchestrator may misparse completion signals
 - **Fix:** Standardize on `next_action: handoff_to_orchestrator` for all completion paths
 - **Affects:** Coordination reliability
 
 #### 8. Memory Tool Stability
+
 - **Issue:** Prompts note `vscode/memory` is "experimental in some builds"
 - **Impact:** Non-deterministic tool availability across environments
 - **Fix:** Document fallback behavior when memory unavailable
 - **Affects:** Learning persistence, context retention
 
 #### 9. No Testing/Validation Tool
+
 - **Issue:** Agents have `execute` but no explicit test framework awareness
 - **Impact:** Validation steps are ad-hoc, inconsistent across agents
 - **Fix:** Document standard validation commands in AGENTS.md template
 - **Affects:** Quality assurance, regression prevention
 
 #### 10. No Rollback/Recovery Tools
+
 - **Issue:** No documented git rollback or error recovery procedures
 - **Impact:** Agents cannot autonomously recover from failed changes
 - **Fix:** Add operational runbook for common failure modes
@@ -210,6 +233,7 @@ graph TB
 ```
 
 **Legend:**
+
 - Solid lines: Orchestrator-controlled delegation (`runSubagent`)
 - Dashed lines: Agent-initiated sub-delegation (`agent` tool)
 - Red: Critical blocker
@@ -220,7 +244,9 @@ graph TB
 ## 6. Concurrency + Parallelization Capabilities
 
 ### Orchestrator Parallelization Logic
+
 From [orchestrator.md](../prompts/orchestrator.md), the Orchestrator can run packets in parallel if:
+
 1. Packets are marked `mode: parallel` in the plan
 2. Touched file sets are **disjoint** (no overlapping edits)
 
@@ -242,17 +268,21 @@ From [orchestrator.md](../prompts/orchestrator.md), the Orchestrator can run pac
 ## 7. Tool Availability by Environment
 
 ### Universal Tools (All Agents)
+
 - `read` / `read/readFile` - File reading (naming varies)
 - `search` - Codebase search (via `vscode` or explicit)
 
 ### Execution Tools (11 Implementation Agents)
+
 - `execute` / `terminal` - Shell command execution
 - `edit` - File modification
 
 ### Coordination Tools (All Agents Except Documentation)
+
 - `agent` / `runSubagent` - Sub-delegation
 
 ### Experimental/Optional Tools
+
 - `vscode/memory`, `memory` - Contextual learning (availability varies by VS Code build)
 - `vscode/askQuestions` - User clarification (Planner, Clarifier only)
 - `web` - External web search (All developers, Designer, Prompt Writer, Planner)
@@ -262,20 +292,23 @@ From [orchestrator.md](../prompts/orchestrator.md), the Orchestrator can run pac
 ## 8. Recommendations
 
 ### Immediate Actions (Week 1)
+
 1. **Add `agent` tool to Documentation Agent** - Critical for autonomy
 2. **Standardize tool naming** - Migrate Orchestrator + Documentation Agent to Convention B (majority pattern)
 3. **Document/remove Native Kickoff agent** - Clear roster ambiguity
 
 ### Short-Term (Month 1)
-4. **Remove `execute` from Planner** OR document its use case - Resolve tool/role conflict
-5. **Add `edit` to Prompt Writer** OR document standard delegation pattern
-6. **Standardize handoff tokens** - All agents → `handoff_to_orchestrator`
+
+1. **Remove `execute` from Planner** OR document its use case - Resolve tool/role conflict
+2. **Add `edit` to Prompt Writer** OR document standard delegation pattern
+3. **Standardize handoff tokens** - All agents → `handoff_to_orchestrator`
 
 ### Medium-Term (Quarter 1)
-7. **Define Junior vs. Senior tool restrictions** - Technical guardrails or explicit escalation triggers
-8. **Create validation runbook** - Standard test commands per project type
-9. **Document memory fallback** - Behavior when `vscode/memory` unavailable
-10. **Create rollback runbook** - Git recovery procedures for common failures
+
+1. **Define Junior vs. Senior tool restrictions** - Technical guardrails or explicit escalation triggers
+2. **Create validation runbook** - Standard test commands per project type
+3. **Document memory fallback** - Behavior when `vscode/memory` unavailable
+4. **Create rollback runbook** - Git recovery procedures for common failures
 
 ---
 
@@ -294,6 +327,7 @@ From [orchestrator.md](../prompts/orchestrator.md), the Orchestrator can run pac
 | Aggregate | None | `vscode` | ❓ **Unknown scope** |
 
 **Critical Unknowns:**
+
 - What does `vscode` include? (edit + read + search + git?)
 - Are `read/readFile` and `read` functionally equivalent?
 - Can Convention A agents search the web? (No `web` or `search` listed)
