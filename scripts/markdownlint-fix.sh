@@ -13,5 +13,5 @@ if [ "$CHECK_ONLY" = "--check" ]; then
 else
   echo "Auto-fixing markdown files in: $REPO_PATH"
   npx markdownlint-cli2 "**/*.md" "!node_modules" "!**/node_modules" --fix
-  echo "✓ Auto-fix complete. Run with --check to verify."
+  echo "Auto-fix complete. Run with --check to verify."
 fi
