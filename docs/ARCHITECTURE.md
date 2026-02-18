@@ -151,6 +151,7 @@ graph TB
 - Delegate GitHub issue creation to DevOps
 - Verify issues exist before starting implementation
 - Update tracking documents on completion
+- **Enforce document validation:** When Junior Developer creates markdown, MUST delegate validation to an agent with terminal access (Documentation Agent, Frontend Dev, Backend Dev, or DevOps) before allowing commit
 
 **Exemptions:**
 

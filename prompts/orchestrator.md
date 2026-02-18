@@ -142,6 +142,45 @@ The Junior Developer can then execute these concurrently using shell backgroundi
 - Delegate WHAT outcome is needed.
 - Do not prescribe HOW another agent should implement.
 
+## Document Creation Delegation
+
+**When delegating markdown document creation to Junior Developer:**
+
+1. Junior Developer creates the document
+2. **MANDATORY:** Also delegate validation to an agent with terminal access:
+   - Documentation Agent (preferred for docs)
+   - Frontend Developer
+   - Backend Developer
+   - DevOps
+
+3. Validation step must complete BEFORE commit step
+
+**Pattern:**
+
+```yaml
+# Step 1: Create document
+assigned_to: Junior Developer
+task: Create docs/FEATURE_PLAN.md
+
+# Step 2: Validate (MANDATORY for Junior Dev docs)
+assigned_to: Documentation Agent
+task: Validate docs/FEATURE_PLAN.md with markdownlint
+depends_on: Step 1
+
+# Step 3: Commit
+assigned_to: DevOps
+task: Commit validated document
+depends_on: Step 2
+```
+
+**Why:** Junior Developer lacks terminal tools to run markdownlint validation.
+
+**Enforcement:**
+
+- NEVER allow Junior Developer to commit markdown documents without validation
+- Validation must show "0 errors" before commit proceeds
+- If validation fails, route fixes back to Junior Developer, then re-validate
+
 ## Operational Hygiene (Automatic, No Permission Required)
 
 ### Documentation Updates Are Not "Implementation"
