@@ -133,6 +133,38 @@ graph TB
 - **Use Case:** When no specialist matches or for simple tasks
 - **Not Preferred:** Use specialists when possible for better context
 
+### Planning Workflow (Mandatory for Non-Trivial Work)
+
+**Default Expectation:** All features, phases, or multi-file work must follow this sequence:
+
+1. **Clarification** (if needed) → Clarifier resolves ambiguity
+2. **Planning** → Planner creates comprehensive plan document
+3. **Documentation** → Plan documented in `docs/<FEATURE>_PLAN.md`
+4. **GitHub Setup** → DevOps creates Epic + child issues
+5. **Execution** → Implementation follows plan packets
+6. **Tracking** → BACKLOG.md and CHANGELOG.md updated on completion
+
+**Orchestrator Responsibilities:**
+
+- Invoke Planner for any work requiring multiple files or phases
+- Ensure plan document is created before implementation
+- Delegate GitHub issue creation to DevOps
+- Verify issues exist before starting implementation
+- Update tracking documents on completion
+
+**Exemptions:**
+
+- Hot fixes under 10 lines
+- Doc-only changes
+- Explicit override in repo-specific AGENTS.md
+
+**Rationale:**
+
+- Plans prevent scope creep and missed dependencies
+- GitHub issues provide work visibility and tracking
+- Documentation enables future reference and onboarding
+- Tracking files maintain project history
+
 ---
 
 ## Agent Roster

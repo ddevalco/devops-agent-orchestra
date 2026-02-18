@@ -16,6 +16,48 @@ This file defines project-specific constraints and protocols for human and agent
 - [ ] Never create `.agent-local/`, `.vscode-agent-orchestration/`, or similar workspace directories in the repository
 - [ ] Use `/tmp/` or in-memory structures for tracking/coordination
 
+## Planning & GitHub Tracking Protocol (MANDATORY)
+
+**For all non-trivial work (features, phases, multi-file changes):**
+
+1. **Create Plan Document:**
+   - Create `docs/<FEATURE_NAME>_PLAN.md` with:
+     - Executive summary
+     - Architecture changes
+     - Step-by-step implementation packets (P\<N\>-01, P\<N\>-02, etc.)
+     - Critical path and dependencies
+     - Acceptance criteria per packet
+   - Get plan approved before implementation begins
+
+2. **Create GitHub Epic & Child Issues:**
+   - Epic issue tracks overall feature/phase
+   - Child issues map 1:1 to implementation packets
+   - Include acceptance criteria in each issue
+   - Label appropriately (epic, epic-child, area:*, priority:P*)
+
+3. **Link Everything:**
+   - Plan document references epic issue number
+   - Epic issue references plan document path
+   - Child issues reference epic parent
+   - Commits reference issue numbers
+
+4. **Update Tracking:**
+   - Update BACKLOG.md when work completes
+   - Update CHANGELOG.md for user-facing changes
+   - Close issues when verified complete
+
+**Exemptions:**
+
+- Hot fixes under 10 lines
+- Documentation-only updates
+- Repo-specific AGENTS.md may override this protocol
+
+**Enforcement:**
+
+- Orchestrator MUST invoke Planner for non-trivial work
+- Planner output MUST include GitHub issue structure
+- DevOps creates issues before implementation begins
+
 ## Available External Tools
 
 ### Context7 (Web Search & Documentation)
