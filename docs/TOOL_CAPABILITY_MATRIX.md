@@ -2,7 +2,7 @@
 
 **Generated:** February 17, 2026  
 **Source Analysis:** Prompt frontmatter + bodies across all 18 agent files  
-**Related:** [PROMPT_AUDIT.md](./PROMPT_AUDIT.md), [IMPROVEMENT_BACKLOG.md](./IMPROVEMENT_BACKLOG.md)
+**Related:** [PROMPT_AUDIT.md](./PROMPT_AUDIT.md)
 
 ---
 
@@ -298,7 +298,3 @@ From [orchestrator.md](../prompts/orchestrator.md), the Orchestrator can run pac
 - What does `vscode` include? (edit + read + search + git?)
 - Are `read/readFile` and `read` functionally equivalent?
 - Can Convention A agents search the web? (No `web` or `search` listed)
-
----
-
-**Next Steps:** See [IMPROVEMENT_BACKLOG.md](./IMPROVEMENT_BACKLOG.md) for prioritized fixes.

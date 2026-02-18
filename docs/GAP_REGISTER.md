@@ -1,7 +1,7 @@
 # Gap Register
 
 **Date:** 2026-02-17  
-**Project:** danes-agent-orchestra  
+**Project:** devops-agent-orchestra  
 **Audit Phase:** Phase 1  
 
 ## Executive Summary

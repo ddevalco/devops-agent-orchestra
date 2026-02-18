@@ -1,6 +1,6 @@
 # Backlog
 
-This document tracks improvement priorities for the danes-agent-orchestra project. It serves as a mirror of GitHub Issues/Projects and a primary planning source.
+This document tracks improvement priorities for the devops-agent-orchestra project. It serves as a mirror of GitHub Issues/Projects and a primary planning source.
 
 **Last Updated:** 2026-02-17
 
@@ -12,9 +12,9 @@ This document tracks improvement priorities for the danes-agent-orchestra projec
 
 ## GitHub Integration
 
-**Repository:** [ddevalco/danes-agent-orchestra](https://github.com/ddevalco/danes-agent-orchestra)  
-**Issues:** [GitHub Issues](https://github.com/ddevalco/danes-agent-orchestra/issues)  
-**Projects:** [GitHub Projects](https://github.com/ddevalco/danes-agent-orchestra/projects)
+**Repository:** [ddevalco/devops-agent-orchestra](https://github.com/ddevalco/devops-agent-orchestra)  
+**Issues:** [GitHub Issues](https://github.com/ddevalco/devops-agent-orchestra/issues)  
+**Projects:** [GitHub Projects](https://github.com/ddevalco/devops-agent-orchestra/projects)
 
 This file maintains synchronization with GitHub state. When GitHub is the source of truth, this file reflects it. When working offline or in rapid iteration, this file may lead temporarily.
 

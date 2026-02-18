@@ -1,6 +1,6 @@
 # Architecture
 
-This document provides a comprehensive overview of the danes-agent-orchestra system architecture, components, and operational patterns.
+This document provides a comprehensive overview of the devops-agent-orchestra system architecture, components, and operational patterns.
 
 **Last Updated:** 2026-02-17  
 **Version:** 0.4.0
@@ -23,7 +23,7 @@ This document provides a comprehensive overview of the danes-agent-orchestra sys
 
 ## System Overview
 
-danes-agent-orchestra is a multi-agent orchestration system built on VS Code's native chat agent capabilities. It enables complex software development tasks through coordinated delegation among specialized AI agents.
+devops-agent-orchestra is a multi-agent orchestration system built on VS Code's native chat agent capabilities. It enables complex software development tasks through coordinated delegation among specialized AI agents.
 
 ### Core Principles
 

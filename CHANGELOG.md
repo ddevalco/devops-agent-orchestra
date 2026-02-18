@@ -115,8 +115,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Basic prompts/ directory structure
 - Initial project vision and scope definition
 
-[Unreleased]: https://github.com/ddevalco/danes-agent-orchestra/compare/v0.3.0...HEAD
-[0.3.0]: https://github.com/ddevalco/danes-agent-orchestra/compare/v0.2.0...v0.3.0
-[0.2.0]: https://github.com/ddevalco/danes-agent-orchestra/compare/v0.1.0...v0.2.0
-[0.1.0]: https://github.com/ddevalco/danes-agent-orchestra/compare/v0.0.1...v0.1.0
-[0.0.1]: https://github.com/ddevalco/danes-agent-orchestra/releases/tag/v0.0.1
+[Unreleased]: https://github.com/ddevalco/devops-agent-orchestra/compare/v0.3.0...HEAD
+[0.3.0]: https://github.com/ddevalco/devops-agent-orchestra/compare/v0.2.0...v0.3.0
+[0.2.0]: https://github.com/ddevalco/devops-agent-orchestra/compare/v0.1.0...v0.2.0
+[0.1.0]: https://github.com/ddevalco/devops-agent-orchestra/compare/v0.0.1...v0.1.0
+[0.0.1]: https://github.com/ddevalco/devops-agent-orchestra/releases/tag/v0.0.1
