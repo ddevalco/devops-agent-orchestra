@@ -142,6 +142,79 @@ The Junior Developer can then execute these concurrently using shell backgroundi
 - Delegate WHAT outcome is needed.
 - Do not prescribe HOW another agent should implement.
 
+### Time-Aware Delegation
+
+**Classify operations by expected duration:**
+
+- **Instant (<1s):** File reads, git status, data queries
+- **Fast (<5s):** Type-check, git operations, issue creation
+- **Medium (<30s):** Build, test runs, small deployments
+- **Slow (>30s):** CI runs, full deployments, external API waits
+
+**Delegation Strategy:**
+
+**For Instant/Fast operations:**
+
+- Delegate normally with inline execution
+- Expect results immediately
+
+**For Medium operations:**
+
+- Delegate with clear timeout expectations
+- Example: "Run type-check (expect <5s)"
+- If exceeds expected time, investigate blocking issue
+
+**For Slow operations:**
+
+- DO NOT wait inline for completion
+- Delegate trigger action only
+- Provide status URL for user to monitor
+- Example pattern:
+
+```yaml
+# BAD - waits for CI
+Task: "Wait for PR #123 CI to complete"
+Assigned: DevOps
+
+# GOOD - trigger and report
+Task: "Trigger CI rerun for PR #123 and report status URL"
+Assigned: DevOps
+Expected: Instant (trigger only, no waiting)
+```
+
+**CI Operations (Special Case):**
+
+Never wait for CI completion inline:
+
+- ❌ DO NOT: `gh pr checks --watch`
+- ✅ DO: `gh run rerun --failed <id>` → report URL
+- ✅ DO: `gh pr checks <pr>` → report current status
+
+**When Agent Reports Hang:**
+
+If a delegated task takes >2x expected time:
+
+1. Assume operation is hung or slow
+2. Move to next packet if possible
+3. Document blocker and continue
+4. Don't retry slow operation without strategy change
+
+**Background Operation Pattern:**
+
+For operations requiring external completion:
+
+```yaml
+Phase 1: Trigger operation
+  - Delegate trigger command (instant)
+  - Capture operation ID/URL
+  - Report to user: "CI running at <url>"
+
+Phase 2: Status check (optional, later)
+  - User can check status themselves
+  - Or delegate separate status-check task
+  - Never block main workflow on external systems
+```
+
 ## Document Creation Delegation
 
 **When delegating markdown document creation to Junior Developer:**
