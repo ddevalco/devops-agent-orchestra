@@ -116,6 +116,101 @@ npx markdownlint --fix path/to/file.md
 - Catches formatting issues before commit
 - Reduces cleanup work and back-and-forth
 
+## Command Execution Best Practices
+
+**For agents with terminal access (DevOps, Backend Dev, Frontend Dev, etc.):**
+
+### Prefer Fast Commands Over Slow Commands
+
+When executing terminal commands:
+
+- Use `--limit`, `head`, `tail` to bound output
+- Avoid commands that wait for external events (CI completion, network responses)
+- Use `--json` output for structured parsing instead of watching spinners
+- Add timeouts where available (e.g., `timeout 5s <command>`)
+
+### Known Slow Commands to Avoid (or bound)
+
+**GitHub CLI:**
+
+```bash
+# BAD - waits for CI indefinitely
+gh pr checks --watch 123
+
+# GOOD - get instant status
+gh pr checks 123
+gh pr view 123 --json statusCheckRollup
+
+# BAD - waits for run to complete
+gh run watch <run-id>
+
+# GOOD - get instant status and rerun separately
+gh run view <run-id>
+gh run rerun --failed <run-id>  # triggers async rerun
+```
+
+**Git Operations:**
+
+```bash
+# BAD - interactive prompt
+git commit
+
+# GOOD - non-interactive
+git commit -m "message"
+
+# BAD - fetch without timeout
+git fetch
+
+# GOOD - fetch with timeout
+timeout 10s git fetch || echo "fetch timeout"
+```
+
+**Build/Test Commands:**
+
+```bash
+# BAD - wait for all tests
+npm test
+
+# GOOD - run specific test or with timeout
+timeout 30s npm test -- --testNamePattern="specific"
+
+# BETTER - check if already passing, skip if so
+npm run type-check  # usually fast
+```
+
+### Report Partial Results
+
+If a command hangs or takes too long:
+
+1. STOP the operation (Ctrl+C or timeout)
+2. Report what you learned before it hung
+3. Suggest alternative approach
+4. Don't retry the same slow command
+
+### Background Operations
+
+For truly long-running operations (CI runs, deployments):
+
+```bash
+# Trigger operation asynchronously
+gh run rerun --failed <run-id>
+
+# Report: "CI rerun triggered, check status at <url>"
+# Don't wait for completion inline
+```
+
+### Time Expectations
+
+**Instant (<1s):** git status, gh pr view, file reads
+
+**Fast (<5s):** type-check, git operations, gh issue create
+
+**Medium (<30s):** bun run build, test suite runs
+
+**Slow (>30s):** Full CI runs, deployments, cluster operations
+
+If a command is "Slow", don't execute it inline. Report status and provide URL for user to monitor.
+
 ## Available External Tools
 
 ### Context7 (Web Search & Documentation)
