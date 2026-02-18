@@ -116,6 +116,76 @@ code block
 Text after code.
 ```
 
+### Critical Heading Rules
+
+**MD001 (heading-increment): Never skip heading levels**
+
+```markdown
+❌ WRONG:
+# Title
+### Subsection (skipped H2)
+
+✅ CORRECT:
+# Title
+## Section
+### Subsection
+```
+
+**Rule:** Each heading level must increment by exactly one from the parent.
+
+- After H1, use H2 (not H3, H4, etc.)
+- After H2, use H3 (not H4, H5, etc.)
+- Never skip levels to create visual hierarchy
+
+### Critical Code Block Rules
+
+**MD040 (fenced-code-language): All code blocks must specify language**
+
+```markdown
+❌ WRONG:
+\`\`\`
+git commit -m "message"
+\`\`\`
+
+✅ CORRECT:
+\`\`\`bash
+git commit -m "message"
+\`\`\`
+
+\`\`\`typescript
+const value: string = "example";
+\`\`\`
+
+\`\`\`text
+Plain text output or examples
+\`\`\`
+```
+
+**Common languages:** `bash`, `typescript`, `javascript`, `python`, `json`, `yaml`, `markdown`, `text`
+
+**Rule:** ALWAYS specify a language. Use `text` for plain output or unformatted examples.
+
+### Additional Common Rules
+
+**MD029 (ol-prefix): Ordered lists should use 1. style**
+
+```markdown
+✅ CORRECT:
+1. First item
+1. Second item
+1. Third item
+```
+
+**MD024 (no-duplicate-heading): Avoid duplicate headings in same document**
+
+- Make headings unique or use different parent sections
+- Use siblings_only in config if same heading OK in different sections
+
+**MD025 (single-title): Only one H1 per document**
+
+- First heading should be H1 (`# Title`)
+- All other top sections use H2 (`## Section`)
+
 **Heading Style:**
 
 - Use ATX-style headings (`## Heading`) NOT setext-style (underlines)
@@ -123,10 +193,12 @@ Text after code.
 
 **Before Handoff:**
 
-1. Run `npx markdownlint-cli2` on all modified .md files
-2. Auto-fix: `npx markdownlint-cli2 --fix`
-3. Manually fix remaining errors (MD029, MD003)
-4. Verify 0 errors before committing
+1. Verify NO heading level skips (MD001): Check H1→H2→H3 progression
+2. Verify ALL code blocks have language tags (MD040): Search for \`\`\` without language
+3. Run `npx markdownlint-cli2` on all modified .md files
+4. Auto-fix: `npx markdownlint-cli2 --fix`
+5. Manually fix remaining errors (MD001, MD040 not auto-fixable)
+6. Verify 0 errors before committing
 
 ## Definition of Done
 

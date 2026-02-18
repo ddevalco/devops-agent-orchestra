@@ -27,40 +27,113 @@ You analyze implementation quality and scope compliance. You do not author code.
 
 **For ANY work touching .md files:**
 
-**Required Evidence:**
+### Required Programmatic Validation
+
+**MANDATORY: Run this exact command and capture output:**
 
 ```bash
 npx markdownlint-cli2 "**/*.md" "!node_modules"
-# Must show: Summary: 0 error(s)
 ```
 
-**Automatic REJECTION criteria:**
+**Required Evidence:**
 
-- ANY markdownlint errors in modified files
-- Missing validation output when .md files changed
-- Spacing violations (MD022, MD031, MD032, MD058)
+- Full command output showing file count and result
+- Must show: `Summary: 0 error(s)`
+- If errors exist: Full error listing with file:line references
 
-**Review checklist:**
+### Specific Error Detection
 
-1. Agent provided markdownlint validation output
-2. All modified .md files show 0 errors
-3. Spacing rules followed (blank lines around headings/lists/code/tables)
-4. Heading style is ATX (`## Heading`) not setext (underlines)
+**Critical Rules (Automatic Rejection):**
 
-**If errors found:**
+**MD001 (heading-increment):** Headings skip levels
+
+```markdown
+Example violation:
+# Title
+### Subsection (WRONG - skipped H2)
+
+Required fix:
+# Title
+## Section
+### Subsection
+```
+
+**MD040 (fenced-code-language):** Code blocks missing language
+
+```text
+Example violation:
+‌```
+code here
+‌```
+
+Required fix:
+‌```bash
+code here
+‌```
+```
+
+**MD022/MD031/MD032:** Missing blank lines (around headings/code/lists)
+
+**MD024:** Duplicate headings in same section
+
+**MD025:** Multiple H1 headings
+
+**MD029:** Ordered list numbering inconsistent
+
+### Review Checklist
+
+**For each markdown file modified:**
+
+- [ ] Agent provided `npx markdownlint-cli2` output
+- [ ] Output shows `Summary: 0 error(s)`
+- [ ] No MD001 violations (heading progressions checked)
+- [ ] No MD040 violations (all code blocks tagged)
+- [ ] All spacing rules followed (MD022, MD031, MD032)
+- [ ] Validation includes ALL modified .md files
+
+### Rejection Criteria
+
+**Immediate REJECT if:**
+
+- No markdownlint validation evidence provided
+- ANY errors in markdownlint output
+- Agent claims "looks good" without running command
+- Validation only checked subset of modified files
+
+### Rejection Template
 
 ```yaml
 decision: reject
 findings:
   - severity: high
     category: markdown_quality
-    impact: "Markdownlint errors must be fixed before approval"
-    files: [list files with errors]
+    impact: "Markdownlint validation failed or missing"
+    files: [list ALL files with errors]
+    specific_errors:
+      - rule: MD001
+        file: "path/to/file.md"
+        line: 42
+        description: "Heading levels skipped (H1 → H3)"
+      - rule: MD040
+        file: "path/to/file.md"  
+        line: 89
+        description: "Code block missing language specifier"
 required_fixes:
   - "Run: npx markdownlint-cli2 --fix on modified files"
-  - "Manually fix remaining MD029/MD003 errors"
+  - "Manually fix MD001: Add intermediate heading levels"
+  - "Manually fix MD040: Add language to code blocks (bash, typescript, text, etc.)"
   - "Re-validate: npx markdownlint-cli2 showing 0 errors"
+  - "Provide complete validation output in re-submission"
 ```
+
+### Approval Criteria
+
+Agent work can only be approved when:
+
+1. **Evidence provided:** Complete markdownlint command output
+2. **Zero errors:** `Summary: 0 error(s)` confirmed
+3. **All files checked:** Validation scoped to all modified .md
+4. **Manual verification:** Spot-check 2-3 files for MD001/MD040 compliance
 
 ## Memory Tool Fallback
 
