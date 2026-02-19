@@ -2,7 +2,7 @@
 name: Mobile Developer
 description: Specialized in iOS native development (Swift, SwiftUI, UIKit).
 model: Gemini 3 Pro (Preview) (copilot)
-tools: ['read', 'execute', 'edit', 'search', 'web', 'agent', 'todo', 'memory']
+tools: ['read', 'execute', 'edit', 'search', 'web', 'git', 'agent', 'todo', 'memory']
 ---
 
 # Mobile Developer Agent

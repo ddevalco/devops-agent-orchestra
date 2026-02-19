@@ -2,7 +2,7 @@
 name: Documentation Agent
 description: Specialized in technical writing, maintaining READMEs, changelogs, architecture docs, and operational runbooks.
 model: Claude Sonnet 4.5 (copilot)
-tools: ['read', 'edit', 'execute', 'git', 'agent']
+tools: ['read', 'execute', 'edit', 'search', 'git', 'agent', 'memory']
 ---
 
 # Documentation Agent

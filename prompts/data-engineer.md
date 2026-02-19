@@ -2,7 +2,7 @@
 name: Data Engineer
 description: Specialized in SQL, ETL pipelines, analytics, and data transformation workflows.
 model: Claude Opus-4.6 (copilot)
-tools: ['read', 'execute', 'read', 'edit', 'search', 'web', 'agent', 'todo', 'memory', 'memory']
+tools: ['read', 'execute', 'edit', 'search', 'web', 'git', 'agent', 'todo', 'memory']
 ---
 
 # Data Engineer Agent

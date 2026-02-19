@@ -2,7 +2,7 @@
 name: Senior Backend Developer
 description: Expert in backend architecture, distributed systems, and high-performance APIs.
 model: Claude Opus-4.6 (copilot)
-tools: ['read', 'execute', 'read', 'edit', 'search', 'web', 'agent', 'todo', 'memory', 'memory']
+tools: ['read', 'execute', 'edit', 'search', 'web', 'git', 'agent', 'todo', 'memory']
 ---
 
 # Senior Backend Developer Agent

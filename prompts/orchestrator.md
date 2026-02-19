@@ -2,7 +2,7 @@
 name: Orchestrator
 description: Coordinates Clarifier, Planner, specialist developers, Designer, Data Engineer, Prompt Writer, DevOps, and Reviewer with phase-based parallelization and strict review gating.
 model: Claude Sonnet 4.5 (copilot)
-tools: ['read', 'edit', 'agent', 'memory']
+tools: ['read', 'execute', 'edit', 'git', 'agent', 'memory']
 ---
 
 <!-- Memory is experimental in some VS Code builds. If unavailable, run without memory. -->

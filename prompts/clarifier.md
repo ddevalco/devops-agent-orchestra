@@ -2,7 +2,7 @@
 name: Clarifier
 description: Resolves ambiguity and converts requests into implementation-ready, testable requirements.
 model: Claude Sonnet 4.5 (copilot)
-tools: ['read', 'read', 'search', 'agent', 'memory', 'memory', 'vscode/askQuestions']
+tools: ['read', 'execute', 'edit', 'search', 'web', 'git', 'agent', 'vscode/askQuestions', 'memory']
 ---
 
 # Clarifier Agent

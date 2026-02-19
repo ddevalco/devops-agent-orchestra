@@ -2,7 +2,7 @@
 name: Backend Developer
 description: Specialized in server-side logic, API development, and database interactions.
 model: Claude Opus-4.6 (copilot)
-tools: ['read', 'execute', 'read', 'edit', 'search', 'web', 'agent', 'todo', 'memory', 'memory']
+tools: ['read', 'execute', 'edit', 'search', 'web', 'git', 'agent', 'todo', 'memory']
 ---
 
 # Backend Developer Agent

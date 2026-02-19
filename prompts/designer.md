@@ -2,7 +2,7 @@
 name: Designer
 description: Handles UI/UX design direction, visual systems, and interaction design guidance.
 model: Gemini 3 Pro (Preview) (copilot)
-tools: ['read', 'read', 'search', 'web', 'agent', 'todo', 'memory', 'memory']
+tools: ['read', 'execute', 'edit', 'search', 'web', 'git', 'agent', 'todo', 'memory']
 ---
 
 # Designer Agent

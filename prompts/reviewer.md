@@ -2,7 +2,7 @@
 name: Reviewer
 description: Validates requirement coverage, scope compliance, and regression risk before release.
 model: Claude Sonnet 4.5 (copilot)
-tools: ['read', 'agent', 'memory']
+tools: ['read', 'execute', 'edit', 'git', 'agent', 'memory']
 ---
 
 # Reviewer Agent

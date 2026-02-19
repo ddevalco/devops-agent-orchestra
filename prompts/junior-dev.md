@@ -2,7 +2,7 @@
 name: Junior Developer
 description: General purpose junior developer for lightweight tasks, quick fixes, and simple implementations.
 model: Gemini 3 Flash (Preview) (copilot)
-tools: ['read', 'edit', 'git', 'agent']
+tools: ['read', 'execute', 'edit', 'search', 'git', 'agent', 'memory']
 ---
 
 # Junior Developer Agent
