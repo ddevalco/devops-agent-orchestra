@@ -11,8 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **Tool Enhancements:** Enhanced agent capabilities with new VS Code tools
   - `search` tool added to Planner and Reviewer for codebase discovery
-  - `web` tool added to Junior Developer, Documentation Agent, and Prompt Writer for research capability
-  - `openSimpleBrowser` tool added to Designer, Frontend Developer, and Sr Frontend Developer for live UI preview
+  - `web` tool added to Junior Dev, Documentation Agent, and Prompt Writer for research capability
+  - `openSimpleBrowser` tool added to Designer, Frontend Dev, and Sr Frontend Dev for live UI preview
   - `vscodeAPI` and `runCommand` tools added to DevOps for VS Code workspace automation
 - Markdown linting scripts for checks and auto-fix
 - Markdown lint runbook for cross-repo adoption
