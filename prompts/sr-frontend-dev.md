@@ -2,7 +2,7 @@
 name: Senior Frontend Developer
 description: Expert in complex UI architecture, state management, and frontend performance.
 model: GPT-5.2-Codex (copilot)
-tools: ['read', 'execute', 'edit', 'search', 'web', 'git', 'agent', 'todo', 'memory']
+tools: ['read', 'execute', 'edit', 'search', 'web', 'openSimpleBrowser', 'git', 'agent', 'todo', 'memory']
 ---
 
 # Senior Frontend Developer Agent

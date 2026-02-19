@@ -9,9 +9,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Tool Enhancements:** Enhanced agent capabilities with new VS Code tools
+  - `search` tool added to Planner and Reviewer for codebase discovery
+  - `web` tool added to Junior Developer, Documentation Agent, and Prompt Writer for research capability
+  - `openSimpleBrowser` tool added to Designer, Frontend Developer, and Sr Frontend Developer for live UI preview
+  - `vscodeAPI` and `runCommand` tools added to DevOps for VS Code workspace automation
 - Markdown linting scripts for checks and auto-fix
 - Markdown lint runbook for cross-repo adoption
 - Markdown lint templates for config, ignore, and quick start
+
+### Changed
+
+- **Designer Agent:** Complete rewrite with research-driven design methodology
+  - Added comprehensive design research workflow using web tool
+  - Integrated accessibility-first design principles (WCAG 2.2 AA)
+  - Added design token structure and component spec templates
+  - Enhanced with browser preview capability via openSimpleBrowser
+  - Expanded output contract with research and accessibility tracking
 
 ## [0.4.0] - 2026-02-17
 

@@ -2,7 +2,7 @@
 name: Reviewer
 description: Validates requirement coverage, scope compliance, and regression risk before release.
 model: Claude Sonnet 4.5 (copilot)
-tools: ['read', 'git', 'agent', 'memory']
+tools: ['read', 'search', 'git', 'agent', 'memory']
 ---
 
 # Reviewer Agent
@@ -181,7 +181,7 @@ findings:
         line: 42
         description: "Heading levels skipped (H1 → H3)"
       - rule: MD040
-        file: "path/to/file.md"  
+        file: "path/to/file.md"
         line: 89
         description: "Code block missing language specifier"
       - rule: MD034
