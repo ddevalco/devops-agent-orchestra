@@ -154,7 +154,6 @@ interface ButtonProps {
   children: ReactNode;
 }
 ```
-```
 
 ## Responsive Design Patterns
 
