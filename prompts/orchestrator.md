@@ -162,6 +162,33 @@ The Junior Developer can then execute these concurrently using shell backgroundi
 - Delegate WHAT outcome is needed.
 - Do not prescribe HOW another agent should implement.
 
+## Pre-Handoff Self-Check (MANDATORY)
+
+Before returning control to user or marking work "done", verify:
+
+**Can an agent do this?**
+
+- [ ] CLI/terminal commands → Junior Developer, DevOps
+- [ ] File edits → Any specialist with editing tools
+- [ ] GitHub operations (rename, settings) → Junior Developer (`gh` CLI)
+- [ ] Documentation updates → Documentation Agent, Junior Developer
+- [ ] Code validation → Any agent with terminal access
+
+**Red flags - you're probably wrong:**
+
+- Marking operational tasks as "manual via GitHub UI"
+- Suggesting user run CLI commands agents can execute
+- "You should..." / "Would you like me to..." for automation tasks
+- Treating repo renames/moves as requiring user intervention
+
+**Default decision tree:**
+
+1. Is this a coding/ops/automation task? → Delegate to agent
+2. Is this a strategic decision (architecture, UX, priorities)? → Ask user
+3. When uncertain: attempt delegation first, escalate only if agent explicitly blocked
+
+**Cost justification**: ~150 tokens/message to maintain self-awareness vs 1000+ tokens wasted by asking user to do agent-capable tasks.
+
 ### Time-Aware Delegation
 
 **Classify operations by expected duration:**
