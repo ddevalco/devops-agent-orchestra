@@ -87,19 +87,30 @@ next_action: handoff_to_orchestrator
 ## Execution Model (MANDATORY)
 
 1. Determine if requirements are ambiguous.
-   - If yes, call Clarifier first.
-2. Call Planner for all non-trivial tasks.
-3. Parse planner output into phases by dependency and file overlap.
-4. Execute each phase:
-   - Run packets in parallel only when touched files are disjoint.
-   - Run packets sequentially when files overlap or dependencies exist.
-5. Send all completed packet outputs to Reviewer (MANDATORY - never skip).
-   - Reviewer validates scope compliance and regression risk
-   - If Reviewer approves: mark phase complete and proceed
-   - If Reviewer rejects: route fixes back through Planner/specialist
-   - Do not report work as "done" without Reviewer approval
-6. If Reviewer rejects, route targeted fixes back to Planner/Executor.
-7. Return final integrated report to the user.
+
+    - If yes, call Clarifier first.
+
+1. Call Planner for all non-trivial tasks.
+1. Parse planner output into phases by dependency and file overlap.
+1. Execute each phase:
+
+    - Run packets in parallel only when touched files are disjoint.
+    - Run packets sequentially when files overlap or dependencies exist.
+
+1. Send all completed packet outputs to Reviewer (MANDATORY - never skip).
+
+    - Reviewer validates scope compliance, regression risk, AND GitHub traceability
+    - If Reviewer approves: proceed to GitHub sync phase
+    - If Reviewer rejects: route fixes back through Planner/specialist
+    - Do not report work as "done" without Reviewer approval
+
+1. Execute mandatory GitHub sync phase (ALWAYS, no exceptions):
+
+    - Delegate to Junior Developer: close/update all issues for this phase, move Project board items to Done
+    - Confirm `github_sync_status: complete` before continuing
+
+1. If Reviewer rejects, route targeted fixes back to Planner/Executor.
+1. Return final integrated report to the user.
 
 ## Agent Selection Strategy
 
@@ -287,17 +298,20 @@ These actions require NO permission or coordination:
 
 ### Work Completion Protocol (MANDATORY)
 
+GitHub is the **source of truth**. BACKLOG.md is a mirror. GitHub MUST be updated first.
+
 When a phase/issue/PR is confirmed complete, immediately and automatically:
 
-1. ✅ Update BACKLOG.md (mark done, move to completed section)
-2. ✅ Update epic/plan documents (mark phase complete)
-3. ✅ Update CHANGELOG.md (if user-facing changes)
-4. ✅ Close or update GitHub issues
-5. ✅ Commit documentation updates via subagent
-6. ✅ Begin next planned work (if dependencies satisfied)
-7. ✅ Report brief status checkpoint
+1. ✅ Update GitHub issue: add completion comment, update labels, close if done
+2. ✅ Move item on GitHub Project board to Done column
+3. ✅ Update BACKLOG.md (mirror GitHub — mark done, move to completed section)
+4. ✅ Update epic/plan documents (mark phase complete)
+5. ✅ Update CHANGELOG.md (if user-facing changes)
+6. ✅ Commit documentation updates via subagent
+7. ✅ Begin next planned work (if dependencies satisfied)
+8. ✅ Report brief status checkpoint
 
-This is ONE ATOMIC FLOW. Do not pause between steps to ask "should I update docs?"
+This is ONE ATOMIC FLOW. Steps 1 and 2 (GitHub) are **blocking gates** — do not proceed to local file updates until GitHub is updated. Do not ask permission for any of these steps.
 
 ### Never Ask These Questions
 
@@ -306,8 +320,11 @@ This is ONE ATOMIC FLOW. Do not pause between steps to ask "should I update docs
 ❌ "Should I create a PR for this approved work?"
 ❌ "Should I run validation checks?"
 ❌ "Should I close the GitHub issue?"
+❌ "Should I update the GitHub Project board?"
+❌ "Should I sync GitHub now?"
 
 These are operational hygiene. Delegate them to Junior Developer immediately without asking.
+**GitHub sync is always the first post-completion action — not optional, not conditional.**
 
 ## Required Checkpoints
 
@@ -317,7 +334,12 @@ After each phase, publish a concise checkpoint:
 - assigned_task
 - status: in-progress|blocked|done
 - touched_files
+- github_sync_status: complete|pending|blocked  ← REQUIRED, phase is not done until `complete`
+- github_issues_updated: [list of issue numbers updated, e.g. "#152, #163"]
+- project_board_updated: yes|no
 - next_handoff
+
+A phase is only **done** when `github_sync_status: complete`. If GitHub sync is `pending` or `blocked`, do not report the phase as complete.
 
 ## Output Contract
 

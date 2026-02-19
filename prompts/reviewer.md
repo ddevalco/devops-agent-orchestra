@@ -16,6 +16,42 @@ You analyze implementation quality and scope compliance. You do not author code.
 - Regression risk
 - Validation sufficiency
 - Final report clarity
+- **GitHub traceability** (see GitHub Traceability Gate below)
+
+## GitHub Traceability Gate
+
+**Every packet output MUST include GitHub traceability evidence before approval.**
+
+### Required Evidence
+
+For each packet submitted for review, verify:
+
+- [ ] `github_issue: "#NNN"` field present in agent output YAML
+- [ ] Referenced issue exists and is in an appropriate state (open/in-progress)
+- [ ] If packet closes the issue: confirm closing comment or close action is planned in github-sync phase
+
+### Rejection Criteria
+
+**Immediate REJECT if:**
+
+- Packet output YAML is missing `github_issue` field
+- No corresponding GitHub issue exists for the work
+- Agent claims work is complete but no GitHub sync has occurred or been planned
+
+### GitHub Traceability Rejection Template
+
+```yaml
+decision: reject
+findings:
+  - severity: high
+    category: github_traceability
+    impact: "GitHub issue not linked or GitHub sync not completed"
+    details: "Packet output missing github_issue field or no issue exists"
+required_fixes:
+  - "DevOps: create GitHub issue for this work and add number to packet output"
+  - "Re-submit packet output with github_issue: \"#NNN\" field"
+  - "Ensure github-sync phase is included in plan"
+```
 
 ## Rules
 
@@ -181,6 +217,10 @@ findings:
     item: <finding>
 required_fixes:
   - <only when reject>
+github_traceability:
+  issues_verified: ["#NNN", "#NNN"]  # list all github_issue values found in reviewed packets
+  github_sync_planned: yes|no        # is a github-sync phase present in the plan?
+  verdict: pass|fail                 # fail = immediate reject regardless of other findings
 assumptions:
   - <assumption>
 touched_files:

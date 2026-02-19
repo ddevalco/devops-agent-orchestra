@@ -56,7 +56,10 @@ This file defines project-specific constraints and protocols for human and agent
 
 - Orchestrator MUST invoke Planner for non-trivial work
 - Planner output MUST include GitHub issue structure
-- DevOps creates issues before implementation begins
+- DevOps creates all GitHub issues immediately after Planner output is approved
+- **No implementation agent may begin a packet until its corresponding GitHub issue number exists**
+- All implementation agent output YAML must include a `github_issue: "#NNN"` field
+- Reviewer MUST reject any packet output missing the `github_issue` field
 
 ## Document Creation & Validation Protocol
 
@@ -487,15 +490,20 @@ Before substantial implementation, read in this order:
 
 ## Work Completion Protocol (Automatic)
 
+GitHub is the **source of truth**. BACKLOG.md is a mirror. GitHub must be updated FIRST.
+
 When work completes, immediately and automatically:
 
-1. ✅ Update BACKLOG.md/GitHub issues (mark done)
-2. ✅ Update CHANGELOG.md (if user-facing)
-3. ✅ Update epic/plan documents
-4. ✅ Commit documentation updates
-5. ✅ Begin next planned work (if dependencies satisfied)
+1. ✅ Update GitHub issue (add completion comment, update labels, close if done)
+2. ✅ Move item on GitHub Project board to appropriate column (In Progress → Done)
+3. ✅ Update BACKLOG.md (mirror GitHub state — mark done, move to completed section)
+4. ✅ Update CHANGELOG.md (if user-facing)
+5. ✅ Update epic/plan documents
+6. ✅ Commit documentation updates
+7. ✅ Begin next planned work (if dependencies satisfied)
 
-This is operational hygiene. Do not ask permission.
+This is ONE ATOMIC FLOW. Do not pause between steps. Do not ask permission.
+GitHub steps 1 and 2 are **blocking** — they must complete before local file steps.
 
 ## Validation Requirements
 

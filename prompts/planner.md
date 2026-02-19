@@ -23,6 +23,9 @@ You create plans. You do NOT write code.
 - Separate overlapping file edits into sequential phases.
 - Mark truly independent packets as parallel.
 - Ask only blocking questions via `vscode/askQuestions`.
+- **Always include a terminal `phase: github-sync` that runs after Reviewer approval.**
+- **Every packet must have a `github_issue` field — DevOps creates these before implementation.**
+- GitHub is the source of truth. BACKLOG.md is a mirror. Plans must account for both.
 
 ## Memory Tool Fallback
 
@@ -57,6 +60,7 @@ phases:
       - id: <packet-id>
         goal: <outcome>
         owner: executor|reviewer
+        github_issue: "#NNN"  # REQUIRED - DevOps creates this before implementation starts
         touched_files:
           - <path>
         depends_on:
@@ -64,6 +68,21 @@ phases:
         validation:
           - <command or check>
         risk: low|medium|high
+  - phase: github-sync
+    objective: Sync all completed work to GitHub — issues closed, project board updated
+    mode: sequential
+    depends_on: [reviewer-gate]  # Always runs after Reviewer approves
+    packets:
+      - id: github-sync-01
+        goal: Close or update all GitHub issues for this plan, move Project board items to Done
+        owner: Junior Developer
+        github_issue: "all issues in this plan"
+        touched_files: []
+        depends_on: [reviewer-gate]
+        validation:
+          - Confirm each issue is closed or has completion comment
+          - Confirm Project board items moved to Done column
+        risk: low
 edge_cases:
   - <edge case>
 assumptions:
