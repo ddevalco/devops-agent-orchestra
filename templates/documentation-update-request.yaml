@@ -1,0 +1,321 @@
+# Documentation Update Request Template
+
+Use this template when delegating documentation updates to Documentation Agent.
+
+## Standard Phase-Level Update (Most Common)
+
+```yaml
+documentation_update_request:
+  # Trigger type
+  trigger: phase_completion  # phase_completion | work_stream_completion | milestone_completion
+  
+  # Scope of update
+  scope: incremental  # incremental | consolidation | comprehensive
+  
+  # Files to update (specific paths)
+  files_to_update:
+    - docs/IMPLEMENTATION_STATUS.md
+    - CHANGELOG.md
+    - docs/project-plan.md
+    # Add 2-4 files for phase-level updates
+  
+  # Changes to document (what was completed)
+  changes_to_document:
+    - "Phase 2A complete (3 packets delivered)"
+    - "Implemented JWT token validation"
+    - "Added rate limiting middleware"
+    - "Tests: 45/45 passing"
+    - "Completion: 65% (was 60%)"
+  
+  # Target duration
+  duration_target: 2-5 minutes  # incremental | 5-10 minutes (consolidation) | 15-20 minutes (comprehensive)
+```
+
+## Work Stream-Level Update (After 5-8 Packets)
+
+```yaml
+documentation_update_request:
+  trigger: work_stream_completion
+  scope: consolidation
+  
+  files_to_update:
+    - docs/IMPLEMENTATION_STATUS.md
+    - CHANGELOG.md
+    - README.md
+    - VISION.md
+    - docs/architecture.md
+    # 5-8 files for work stream updates
+  
+  changes_to_document:
+    - "Work Stream 2 (Authentication) complete"
+    - "Delivered: JWT validation, rate limiting, session management"
+    - "Tests: 120/120 passing"
+    - "Update README 'What's Working Today' section"
+    - "Update architecture docs with auth flow"
+    - "Completion: 75% (was 60%)"
+  
+  duration_target: 5-10 minutes
+```
+
+## Milestone-Level Update (Major Completion)
+
+```yaml
+documentation_update_request:
+  trigger: milestone_completion
+  scope: comprehensive
+  
+  files_to_update:
+    - ALL_DOCUMENTATION_FILES  # Special marker for comprehensive audit
+    # Or list specific critical files:
+    - README.md
+    - VISION.md
+    - CHANGELOG.md
+    - docs/IMPLEMENTATION_STATUS.md
+    - docs/ARCHITECTURE.md
+    - docs/API_REFERENCE.md
+    - docs/USER_GUIDE.md
+  
+  changes_to_document:
+    - "Milestone 1 (MVP) complete"
+    - "All planned features delivered"
+    - "Comprehensive audit of all documentation"
+    - "Remove outdated content"
+    - "Update all examples and commands"
+    - "Verify all internal links"
+    - "Tests: 250/250 passing"
+    - "Completion: 100% (was 95%)"
+  
+  duration_target: 15-20 minutes
+```
+
+## Delegation Example (Complete)
+
+```yaml
+# After Phase 2A implementation and testing complete
+
+step: update_documentation
+assigned_to: Documentation Agent
+priority: mandatory
+blocking: yes
+depends_on:
+  - implementation_validation_complete
+  - all_tests_passing
+
+task: |
+  Update documentation for Phase 2A completion.
+  
+  documentation_update_request:
+    trigger: phase_completion
+    scope: incremental
+    
+    files_to_update:
+      - docs/IMPLEMENTATION_STATUS.md
+      - CHANGELOG.md
+      - docs/auth-design.md
+    
+    changes_to_document:
+      - "Phase 2A - Authentication Layer [DONE]"
+      - "Implemented JWT token validation"
+      - "Added rate limiting middleware (100 req/min per IP)"
+      - "Added auth middleware tests"
+      - "Tests: 45/45 passing"
+      - "Update completion: 65% (was 60%)"
+    
+    duration_target: 2-5 minutes
+  
+  validation_required: yes
+  validation_command: npx markdownlint-cli2 "**/*.md"
+
+success_criteria:
+  - All specified files updated
+  - Changes accurately reflect implementation
+  - Markdown lints clean (0 errors)
+  - Documentation update complete in <5 minutes
+
+next_step: github_sync_with_atomic_commit
+```
+
+## Field Definitions
+
+### trigger
+
+**Purpose:** Indicates what event triggered the documentation update.
+
+**Values:**
+
+- `phase_completion` — After completing a phase (2-3 packets) [MOST COMMON]
+- `work_stream_completion` — After completing a work stream (5-8 packets)
+- `milestone_completion` — Major milestone completion
+
+### scope
+
+**Purpose:** Defines the extent of documentation updates.
+
+**Values:**
+
+- `incremental` — Update 2-4 specific files (phase-level)
+- `consolidation` — Update 5-8 files, include README/VISION (work stream-level)
+- `comprehensive` — Audit all documentation, cleanup, consistency check (milestone-level)
+
+### files_to_update
+
+**Purpose:** Specific file paths to update.
+
+**Guidelines:**
+
+- Use relative paths from repository root
+- Be specific (list exact files)
+- For comprehensive updates, use `ALL_DOCUMENTATION_FILES` or list critical files
+- Order by priority (most important first)
+
+**Common files:**
+
+- `docs/IMPLEMENTATION_STATUS.md` — Almost always included
+- `CHANGELOG.md` — Almost always included
+- `docs/project-plan.md` or `VISION.md` — Frequently included
+- `README.md` — Work stream and milestone updates
+- Architecture docs — When patterns change
+
+### changes_to_document
+
+**Purpose:** Specific changes to document (what was completed).
+
+**Guidelines:**
+
+- Be specific and factual
+- Include test results
+- Include completion percentages
+- Include feature descriptions
+- Use past tense ("Implemented X", "Added Y")
+
+**Examples:**
+
+- "Phase 2A complete (3 packets delivered)"
+- "Implemented JWT token validation with RS256"
+- "Added rate limiting: 100 req/min per IP"
+- "Tests: 45/45 passing (100% coverage)"
+- "Completion: 65% (was 60%)"
+
+### duration_target
+
+**Purpose:** Expected time for documentation update.
+
+**Guidelines:**
+
+- `2-5 minutes` — Incremental (phase-level)
+- `5-10 minutes` — Consolidation (work stream-level)
+- `15-20 minutes` — Comprehensive (milestone-level)
+
+## Common Patterns
+
+### Pattern 1: Post-Implementation Phase Update
+
+**When:** After completing phase implementation and validation.
+
+**Template:**
+
+```yaml
+documentation_update_request:
+  trigger: phase_completion
+  scope: incremental
+  files_to_update:
+    - docs/IMPLEMENTATION_STATUS.md
+    - CHANGELOG.md
+  changes_to_document:
+    - "Phase <X> complete"
+    - "<Feature descriptions>"
+    - "Tests: <X>/<X> passing"
+  duration_target: 2-5 minutes
+```
+
+### Pattern 2: Post-Feature Work Stream Update
+
+**When:** After completing a major feature area (multiple phases).
+
+**Template:**
+
+```yaml
+documentation_update_request:
+  trigger: work_stream_completion
+  scope: consolidation
+  files_to_update:
+    - docs/IMPLEMENTATION_STATUS.md
+    - CHANGELOG.md
+    - README.md
+    - docs/architecture.md
+  changes_to_document:
+    - "Work Stream <X> complete"
+    - "Update README 'What's Working Today'"
+    - "Update architecture with <X> patterns"
+  duration_target: 5-10 minutes
+```
+
+### Pattern 3: Comprehensive Milestone Audit
+
+**When:** Major milestone completion (MVP, v1.0, Phase 1 complete).
+
+**Template:**
+
+```yaml
+documentation_update_request:
+  trigger: milestone_completion
+  scope: comprehensive
+  files_to_update:
+    - ALL_DOCUMENTATION_FILES
+  changes_to_document:
+    - "Milestone <X> complete"
+    - "Comprehensive documentation audit"
+    - "Remove outdated content"
+    - "Update all examples"
+  duration_target: 15-20 minutes
+```
+
+## Integration with Orchestrator Workflow
+
+```mermaid
+sequenceDiagram
+    participant O as Orchestrator
+    participant I as Implementation Agent
+    participant D as Documentation Agent
+    participant G as GitHub Sync Agent
+    
+    O->>I: Execute phase implementation
+    I-->>O: Implementation complete
+    
+    O->>I: Run validation tests
+    I-->>O: Tests passing
+    
+    Note over O,D: MANDATORY GATE
+    O->>D: Update documentation (template)
+    D-->>O: Documentation updated
+    
+    O->>G: GitHub sync (atomic commit)
+    Note over G: Code + docs together
+    G-->>O: Commit complete
+    
+    O->>O: Mark phase complete
+```
+
+## Validation Checklist
+
+Before marking documentation update complete, verify:
+
+- [ ] All files in `files_to_update` were modified
+- [ ] Changes accurately reflect implementation
+- [ ] Markdown lints clean (0 errors)
+- [ ] Completion percentages updated
+- [ ] Test results included
+- [ ] Internal links work
+- [ ] No TODO markers left
+- [ ] Duration within target range
+
+## Related Templates
+
+- [templates/execution-packet.md](execution-packet.md) — Execution packet template
+- [templates/final-report.md](final-report.md) — Final report template
+- [templates/review-report.md](review-report.md) — Review report template
+
+## Related Documentation
+
+- [docs/DOCUMENTATION_PROTOCOL.md](../docs/DOCUMENTATION_PROTOCOL.md) — Complete protocol reference
+- [prompts/orchestrator.md](../prompts/orchestrator.md) — Orchestrator prompt with protocol enforcement

@@ -86,6 +86,8 @@ sequenceDiagram
     
     O->>R: Submit all work to review gate
     
+    Note over O: Documentation-First Protocol<br/>(automatic, mandatory)
+    
     alt Review rejected
         R-->>O: Required fixes
         O->>S: Route fixes to specialists
@@ -108,6 +110,7 @@ sequenceDiagram
 
 - ✅ **Autonomous Orchestration** - Clarifier → Planner → Parallel Execution → Reviewer workflow
 - ✅ **18 Specialist Agents** - Including new iOS Mobile Developer for Swift/SwiftUI
+- ✅ **Documentation-First Completion** - Mandatory doc updates before phase completion, never outdated
 - ✅ **Operational Hygiene** - Auto-updates CHANGELOG/BACKLOG without prompting
 - ✅ **Validation Runbook** - Standard commands for Node.js, Python, Go, Swift/iOS
 - ✅ **Recovery Runbook** - Error procedures and escalation criteria

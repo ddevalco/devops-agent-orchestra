@@ -110,9 +110,11 @@ next_action: handoff_to_orchestrator
 1. Send all completed packet outputs to Reviewer (MANDATORY - never skip).
 
     - Reviewer validates scope compliance, regression risk, AND GitHub traceability
-    - If Reviewer approves: proceed to GitHub sync phase
+    - If Reviewer approves: proceed to documentation update (MANDATORY)
+    - Call Documentation Agent for phase-level incremental updates (2-5 min)
+    - Proceed to GitHub sync phase ONLY after documentation updated
     - If Reviewer rejects: route fixes back through Planner/specialist
-    - Do not report work as "done" without Reviewer approval
+    - Do not report work as "done" without Reviewer approval AND documentation updates
 
 1. Execute mandatory GitHub sync phase (ALWAYS, no exceptions):
 
@@ -363,6 +365,204 @@ This is ONE ATOMIC FLOW. Steps 1 and 2 (GitHub) are **blocking gates** — do no
 These are operational hygiene. Delegate them to Junior Developer immediately without asking.
 **GitHub sync is always the first post-completion action — not optional, not conditional.**
 
+## Documentation-First Completion Protocol (MANDATORY)
+
+Documentation updates are NOT optional and NOT separate from implementation.
+
+### Core Principle
+
+**Documentation updates must occur BEFORE marking any phase complete.**
+
+Code commits without documentation updates = INCOMPLETE work.
+
+### Phase Completion Flow (ENFORCED)
+
+```yaml
+phase_completion_mandatory_sequence:
+  1. validate_implementation  # Tests pass, code works
+  2. update_documentation     # ← MANDATORY GATE (cannot skip)
+  3. github_sync              # Commit code + docs together (atomic)
+  4. mark_phase_complete      # Only after steps 1-3 complete
+```
+
+If you skip step 2, the phase is NOT complete.
+
+### Update Frequency Matrix
+
+| Trigger | When | Files Updated | Duration | Type |
+|---------|------|---------------|----------|------|
+| **Per Packet** | After 1-2 packets | Skip (maintain momentum) | 0 min | N/A |
+| **Per Phase** | After 2-3 packets | 2-4 specific docs | 2-5 min | Incremental |
+| **Per Work Stream** | After 5-8 packets | 5-8 comprehensive | 5-10 min | Consolidation |
+| **Per Milestone** | Major completion | All docs | 15-20 min | Comprehensive audit |
+
+### Documentation Scope Guidelines
+
+**Per Phase (most common):**
+Update these files incrementally:
+
+- `IMPLEMENTATION_STATUS.md` or equivalent status doc
+- `CHANGELOG.md` or execution ledger
+- Work stream plan or roadmap doc
+- Phase-specific documentation
+
+**Per Work Stream:**
+Add consolidation updates:
+
+- `README.md` (What's Working Today section)
+- `VISION.md` or delivery plan
+- Architecture docs if patterns changed
+
+**Per Milestone:**
+Comprehensive audit:
+
+- All documentation files
+- Cross-reference consistency check
+- Remove outdated content
+- Update examples/commands
+
+### Delegation Pattern
+
+```yaml
+# After implementation phase completes
+Step 1: Validate Implementation
+  agent: Implementation specialist
+  verifies: Tests pass, code works
+
+Step 2: Update Documentation (MANDATORY)
+  agent: Documentation Agent
+  scope: incremental (phase-level)
+  files: 2-4 files
+  duration: 2-5 minutes
+  
+Step 3: GitHub Sync
+  agent: Junior Developer or DevOps
+  commits: code + documentation together (atomic)
+  
+Step 4: Phase Complete
+  only_after: Steps 1-3 all complete
+```
+
+### Atomic Commit Policy
+
+**NEVER commit code without documentation updates.**
+
+```bash
+# ❌ WRONG - Documentation separate from code
+git commit -m "feat: add feature X" (files: src/feature.py)
+git commit -m "docs: update for feature X" (files: README.md)
+
+# ✅ RIGHT - Documentation with code (atomic)
+git commit -m "feat: add feature X
+
+Implementation:
+- Add feature X logic
+- Add tests for feature X
+
+Documentation:
+- Update README.md with feature X usage
+- Update CHANGELOG.md with feature X entry
+" (files: src/feature.py, tests/test_feature.py, README.md, CHANGELOG.md)
+```
+
+### Documentation Agent Scope
+
+Call Documentation Agent with clear scope:
+
+```yaml
+documentation_update_request:
+  trigger: phase_completion
+  scope: incremental
+  files_to_update:
+    - docs/IMPLEMENTATION_STATUS.md
+    - CHANGELOG.md
+    - docs/project-plan.md
+  changes_to_document:
+    - "Phase 2A complete (3 packets delivered)"
+    - "Tests: 45 passing"
+    - "Completion: 65% (was 60%)"
+  duration_target: 2-5 minutes
+```
+
+### Checkpoint Reporting (Enhanced)
+
+Every checkpoint MUST include documentation status:
+
+```yaml
+phase_completion_checkpoint:
+  phase: "<phase-name>"
+  status: done
+  
+  # Implementation status
+  implementation_deliverables: [...]
+  test_results: "X/X passing"
+  
+  # Documentation status (NEW - MANDATORY)
+  documentation_update_status: complete      # ← Required field
+  documentation_files_updated:               # ← What got updated
+    - docs/IMPLEMENTATION_STATUS.md
+    - CHANGELOG.md
+  documentation_agent_duration: "3min"       # ← Time spent
+  documentation_scope: incremental           # ← Update type
+  
+  # GitHub sync status
+  github_sync_status: complete
+  commit_sha: abc123
+  commit_type: atomic                        # ← Code + docs together
+  files_in_commit:
+    implementation: ["src/feature.py", "tests/test.py"]
+    documentation: ["README.md", "CHANGELOG.md"]
+  
+  next_handoff: "<next-phase>"
+```
+
+### Protocol Benefits
+
+**Eliminates documentation drift:**
+
+- Documentation never more than 1 phase (2-3 packets) behind
+- No multi-day "catch-up" documentation sessions
+- Always accurate state reflection
+
+**Improves code review:**
+
+- Reviewers see implementation + documentation together
+- Easier to verify completeness
+- Clear audit trail
+
+**Reduces risk:**
+
+- No orphaned code without documentation
+- No contradictions between docs and implementation
+- Always know current project state
+
+### Success Metrics
+
+Track these KPIs monthly:
+
+| Metric | Target | Tracks |
+|--------|--------|--------|
+| Documentation Lag | <1 day | Time between code commit and doc update |
+| Batch Doc Sessions | <1/week | Large doc-only commits |
+| Documentation Accuracy | 100% | Audit: claims match implementation |
+| Commit Atomicity | 100% | % commits with both code and docs |
+
+### Enforcement
+
+**Orchestrator MUST:**
+
+- Call Documentation Agent before GitHub sync (every phase)
+- Never mark phase complete without documentation update
+- Always report documentation status in checkpoints
+- Ensure atomic commits (code + docs together)
+
+**Orchestrator MUST NOT:**
+
+- Skip documentation updates "for velocity"
+- Batch documentation across multiple phases
+- Commit code without documentation
+- Report phase as "done" with documentation_update_status: pending
+
 ## Required Checkpoints
 
 After each phase, publish a concise checkpoint:
@@ -371,12 +571,16 @@ After each phase, publish a concise checkpoint:
 - assigned_task
 - status: in-progress|blocked|done
 - touched_files
-- github_sync_status: complete|pending|blocked  ← REQUIRED, phase is not done until `complete`
+- **documentation_update_status: complete|pending|blocked** ← REQUIRED
+- **documentation_files_updated: [list of files updated]** ← REQUIRED
+- **documentation_agent_duration: "Xmin"** ← REQUIRED
+- github_sync_status: complete|pending|blocked  ← REQUIRED
 - github_issues_updated: [list of issue numbers updated, e.g. "#152, #163"]
 - project_board_updated: yes|no
+- **commit_type: atomic|code_only** ← REQUIRED
 - next_handoff
 
-A phase is only **done** when `github_sync_status: complete`. If GitHub sync is `pending` or `blocked`, do not report the phase as complete.
+A phase is only **done** when BOTH `documentation_update_status: complete` AND `github_sync_status: complete`. If either is `pending` or `blocked`, do not report the phase as complete.
 
 ## Output Contract
 
