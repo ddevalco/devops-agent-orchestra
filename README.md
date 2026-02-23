@@ -67,40 +67,40 @@ sequenceDiagram
     participant J as Junior Dev
 
     U->>O: Objective + constraints
-    
+
     alt Ambiguous requirements
         O->>C: Resolve ambiguity
         C-->>O: Clarified assumptions
     end
-    
+
     O->>P: Create execution plan
     P-->>O: Packets (phases, dependencies, files)
-    
+
     Note over O,S: Orchestrator coordinates, never implements
-    
+
     loop For each phase
         O->>S: Delegate packet(s) to specialists
         Note over S: Parallel if files disjoint,<br/>Sequential if overlap
         S-->>O: Completed work
     end
-    
+
     O->>R: Submit all work to review gate
-    
+
     Note over O: Documentation-First Protocol<br/>(automatic, mandatory)
-    
+
     alt Review rejected
         R-->>O: Required fixes
         O->>S: Route fixes to specialists
         S-->>O: Fixed work
         O->>R: Re-submit for review
     end
-    
+
     R-->>O: APPROVED
-    
+
     Note over O,J: Work Completion Protocol (automatic)
     O->>J: Update CHANGELOG/BACKLOG
     J-->>O: Docs updated
-    
+
     O-->>U: Final report + validation
 ```
 

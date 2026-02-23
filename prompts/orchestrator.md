@@ -434,11 +434,11 @@ Step 2: Update Documentation (MANDATORY)
   scope: incremental (phase-level)
   files: 2-4 files
   duration: 2-5 minutes
-  
+
 Step 3: GitHub Sync
   agent: Junior Developer or DevOps
   commits: code + documentation together (atomic)
-  
+
 Step 4: Phase Complete
   only_after: Steps 1-3 all complete
 ```
@@ -492,11 +492,11 @@ Every checkpoint MUST include documentation status:
 phase_completion_checkpoint:
   phase: "<phase-name>"
   status: done
-  
+
   # Implementation status
   implementation_deliverables: [...]
   test_results: "X/X passing"
-  
+
   # Documentation status (NEW - MANDATORY)
   documentation_update_status: complete      # ← Required field
   documentation_files_updated:               # ← What got updated
@@ -504,7 +504,7 @@ phase_completion_checkpoint:
     - CHANGELOG.md
   documentation_agent_duration: "3min"       # ← Time spent
   documentation_scope: incremental           # ← Update type
-  
+
   # GitHub sync status
   github_sync_status: complete
   commit_sha: abc123
@@ -512,7 +512,7 @@ phase_completion_checkpoint:
   files_in_commit:
     implementation: ["src/feature.py", "tests/test.py"]
     documentation: ["README.md", "CHANGELOG.md"]
-  
+
   next_handoff: "<next-phase>"
 ```
 

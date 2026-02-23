@@ -8,17 +8,17 @@ Use this template when delegating documentation updates to Documentation Agent.
 documentation_update_request:
   # Trigger type
   trigger: phase_completion  # phase_completion | work_stream_completion | milestone_completion
-  
+
   # Scope of update
   scope: incremental  # incremental | consolidation | comprehensive
-  
+
   # Files to update (specific paths)
   files_to_update:
     - docs/IMPLEMENTATION_STATUS.md
     - CHANGELOG.md
     - docs/project-plan.md
     # Add 2-4 files for phase-level updates
-  
+
   # Changes to document (what was completed)
   changes_to_document:
     - "Phase 2A complete (3 packets delivered)"
@@ -26,7 +26,7 @@ documentation_update_request:
     - "Added rate limiting middleware"
     - "Tests: 45/45 passing"
     - "Completion: 65% (was 60%)"
-  
+
   # Target duration
   duration_target: 2-5 minutes  # incremental | 5-10 minutes (consolidation) | 15-20 minutes (comprehensive)
 ```
@@ -37,7 +37,7 @@ documentation_update_request:
 documentation_update_request:
   trigger: work_stream_completion
   scope: consolidation
-  
+
   files_to_update:
     - docs/IMPLEMENTATION_STATUS.md
     - CHANGELOG.md
@@ -45,7 +45,7 @@ documentation_update_request:
     - VISION.md
     - docs/architecture.md
     # 5-8 files for work stream updates
-  
+
   changes_to_document:
     - "Work Stream 2 (Authentication) complete"
     - "Delivered: JWT validation, rate limiting, session management"
@@ -53,7 +53,7 @@ documentation_update_request:
     - "Update README 'What's Working Today' section"
     - "Update architecture docs with auth flow"
     - "Completion: 75% (was 60%)"
-  
+
   duration_target: 5-10 minutes
 ```
 
@@ -63,7 +63,7 @@ documentation_update_request:
 documentation_update_request:
   trigger: milestone_completion
   scope: comprehensive
-  
+
   files_to_update:
     - ALL_DOCUMENTATION_FILES  # Special marker for comprehensive audit
     # Or list specific critical files:
@@ -74,7 +74,7 @@ documentation_update_request:
     - docs/ARCHITECTURE.md
     - docs/API_REFERENCE.md
     - docs/USER_GUIDE.md
-  
+
   changes_to_document:
     - "Milestone 1 (MVP) complete"
     - "All planned features delivered"
@@ -84,7 +84,7 @@ documentation_update_request:
     - "Verify all internal links"
     - "Tests: 250/250 passing"
     - "Completion: 100% (was 95%)"
-  
+
   duration_target: 15-20 minutes
 ```
 
@@ -103,16 +103,16 @@ depends_on:
 
 task: |
   Update documentation for Phase 2A completion.
-  
+
   documentation_update_request:
     trigger: phase_completion
     scope: incremental
-    
+
     files_to_update:
       - docs/IMPLEMENTATION_STATUS.md
       - CHANGELOG.md
       - docs/auth-design.md
-    
+
     changes_to_document:
       - "Phase 2A - Authentication Layer [DONE]"
       - "Implemented JWT token validation"
@@ -120,9 +120,9 @@ task: |
       - "Added auth middleware tests"
       - "Tests: 45/45 passing"
       - "Update completion: 65% (was 60%)"
-    
+
     duration_target: 2-5 minutes
-  
+
   validation_required: yes
   validation_command: npx markdownlint-cli2 "**/*.md"
 
@@ -278,21 +278,21 @@ sequenceDiagram
     participant I as Implementation Agent
     participant D as Documentation Agent
     participant G as GitHub Sync Agent
-    
+
     O->>I: Execute phase implementation
     I-->>O: Implementation complete
-    
+
     O->>I: Run validation tests
     I-->>O: Tests passing
-    
+
     Note over O,D: MANDATORY GATE
     O->>D: Update documentation (template)
     D-->>O: Documentation updated
-    
+
     O->>G: GitHub sync (atomic commit)
     Note over G: Code + docs together
     G-->>O: Commit complete
-    
+
     O->>O: Mark phase complete
 ```
 
